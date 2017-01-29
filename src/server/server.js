@@ -56,7 +56,7 @@ const server = new Hapi.Server();
 
 let port;
 if (process.env.PORT) {
-  port = process.env.port;
+  port = process.env.PORT;
 } else if (DEVELOPMENT) {
   port = 3000;
 } else {

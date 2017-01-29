@@ -7,7 +7,7 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 // redundant to server/server.js
 let port;
 if (process.env.PORT) {
-  port = process.env.port;
+  port = process.env.PORT;
 } else if (DEVELOPMENT) {
   port = 3000;
 } else {
