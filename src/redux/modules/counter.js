@@ -1,4 +1,6 @@
-const INCREMENT = 'redux-example/counter/INCREMENT';
+/* eslint-disable */
+
+const INCREMENT = 'counter/INCREMENT';
 
 const initialState = {
   count: 0

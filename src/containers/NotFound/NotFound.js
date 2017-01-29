@@ -1,10 +1,23 @@
-import React from 'react';
+// @flow
 
-export default function NotFound() {
-  return (
-    <div className="container">
-      <h1>Doh! 404!</h1>
-      <p>These are <em>not</em> the droids you are looking for!</p>
-    </div>
-  );
+import React, { Component, PropTypes } from 'react';
+import { Message } from 'semantic-ui-react';
+
+export default class NotFound extends Component {
+  static propTypes = {
+    location: PropTypes.object,
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <h1>404 not found!</h1>
+        <Message
+          error
+          header="There is no such path."
+          content={this.props.location.pathname}
+        />
+      </div>
+    );
+  }
 }

@@ -1,35 +1,42 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-import * as authActions from 'redux/modules/auth';
+// @flow
+
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { Icon, Header, Button } from 'semantic-ui-react';
+
+import * as authActions from '../../redux/modules/auth';
 
 @connect(
-    state => ({user: state.auth.user}),
-    authActions)
-export default
-class LoginSuccess extends Component {
+  state => ({ user: state.auth.user && state.auth.user.name ? state.auth.user : null }),
+  authActions)
+export default class LoginSuccess extends Component {
   static propTypes = {
     user: PropTypes.object,
-    logout: PropTypes.func
+    logout: PropTypes.func,
   }
 
   render() {
-    const {user, logout} = this.props;
-    return (user &&
-      <div className="container">
-        <h1>Login Success</h1>
-
+    const { user, logout } = this.props;
+    if (!user) {
+      return null;
+    }
+    return (
+      <div>
+        <Header as="h1">Login Success</Header>
         <div>
-          <p>Hi, {user.name}. You have just successfully logged in, and were forwarded here
-            by <code>componentWillReceiveProps()</code> in <code>App.js</code>, which is listening to
+          <p>
+            Hi, {user.name}. You have just successfully logged in,
+            and were forwarded here
+            by <code>componentWillReceiveProps()</code> in <code>App.js</code>,
+            which is listening to
             the auth reducer via redux <code>@connect</code>. How exciting!
           </p>
-
           <p>
-            The same function will forward you to <code>/</code> should you chose to log out. The choice is yours...
+            The same function will forward you to <code>/</code> should
+            you chose to log out. The choice is yours...
           </p>
-
           <div>
-            <button className="btn btn-danger" onClick={logout}><i className="fa fa-sign-out"/>{' '}Log Out</button>
+            <Button secondary size="mini" onClick={logout}><Icon name="sign out" />{' '}Log Out</Button>
           </div>
         </div>
       </div>

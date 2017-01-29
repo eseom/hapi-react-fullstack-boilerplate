@@ -1,15 +1,17 @@
-const LOAD = 'redux-example/auth/LOAD';
-const LOAD_SUCCESS = 'redux-example/auth/LOAD_SUCCESS';
-const LOAD_FAIL = 'redux-example/auth/LOAD_FAIL';
-const LOGIN = 'redux-example/auth/LOGIN';
-const LOGIN_SUCCESS = 'redux-example/auth/LOGIN_SUCCESS';
-const LOGIN_FAIL = 'redux-example/auth/LOGIN_FAIL';
-const LOGOUT = 'redux-example/auth/LOGOUT';
-const LOGOUT_SUCCESS = 'redux-example/auth/LOGOUT_SUCCESS';
-const LOGOUT_FAIL = 'redux-example/auth/LOGOUT_FAIL';
+// @flow
+
+const LOAD = 'auth/LOAD';
+const LOAD_SUCCESS = 'auth/LOAD_SUCCESS';
+const LOAD_FAIL = 'auth/LOAD_FAIL';
+const LOGIN = 'auth/LOGIN';
+const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS';
+const LOGIN_FAIL = 'auth/LOGIN_FAIL';
+const LOGOUT = 'auth/LOGOUT';
+const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS';
+const LOGOUT_FAIL = 'auth/LOGOUT_FAIL';
 
 const initialState = {
-  loaded: false
+  loaded: false,
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -17,56 +19,56 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case LOAD_SUCCESS:
       return {
         ...state,
         loading: false,
         loaded: true,
-        user: action.result
+        user: action.result,
       };
     case LOAD_FAIL:
       return {
         ...state,
         loading: false,
         loaded: false,
-        error: action.error
+        error: action.error,
       };
     case LOGIN:
       return {
         ...state,
-        loggingIn: true
+        loggingIn: true,
       };
     case LOGIN_SUCCESS:
       return {
         ...state,
         loggingIn: false,
-        user: action.result
+        user: action.result,
       };
     case LOGIN_FAIL:
       return {
         ...state,
         loggingIn: false,
         user: null,
-        loginError: action.error
+        loginError: action.error,
       };
     case LOGOUT:
       return {
         ...state,
-        loggingOut: true
+        loggingOut: true,
       };
     case LOGOUT_SUCCESS:
       return {
         ...state,
         loggingOut: false,
-        user: null
+        user: null,
       };
     case LOGOUT_FAIL:
       return {
         ...state,
         loggingOut: false,
-        logoutError: action.error
+        logoutError: action.error,
       };
     default:
       return state;
@@ -80,24 +82,24 @@ export function isLoaded(globalState) {
 export function load() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/loadAuth')
+    promise: client => client.get('/api/loadAuth'),
   };
 }
 
 export function login(name) {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.post('/login', {
+    promise: client => client.post('/api/login', {
       data: {
-        name: name
-      }
-    })
+        name,
+      },
+    }),
   };
 }
 
 export function logout() {
   return {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
-    promise: (client) => client.get('/logout')
+    promise: client => client.get('/api/logout'),
   };
 }

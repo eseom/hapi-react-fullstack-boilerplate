@@ -1,20 +1,21 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
+// @flow
 
-@connect(state => ({ time: state.info.data.time }))
-export default class MiniInfoBar extends Component {
-  static propTypes = {
-    time: PropTypes.number
-  }
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
-  render() {
-    const {time} = this.props;
-    return (
-      <div className="mini-info-bar">
-        The info bar was last loaded at
-        {' '}
-        <span>{time && new Date(time).toString()}</span>
-      </div>
-    );
-  }
-}
+const MainInfoBar = (props) => {
+  const { time } = props;
+  return (
+    <div className="mini-info-bar">
+      The info bar was last loaded at
+      {' '}
+      <span>{time && new Date(time).toString()}</span>
+    </div>
+  );
+};
+
+MainInfoBar.propTypes = {
+  time: PropTypes.number,
+};
+
+export default connect(store => ({ time: store.info.data.time }))(MainInfoBar);

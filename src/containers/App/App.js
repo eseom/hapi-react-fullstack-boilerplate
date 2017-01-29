@@ -1,20 +1,20 @@
+// @flow
+
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { IndexLink } from 'react-router';
-import { LinkContainer } from 'react-router-bootstrap';
-import Navbar from 'react-bootstrap/lib/Navbar';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
 import Helmet from 'react-helmet';
-import { isLoaded as isInfoLoaded, load as loadInfo } from 'redux/modules/info';
-import { isLoaded as isAuthLoaded, load as loadAuth, logout } from 'redux/modules/auth';
-import { InfoBar } from 'components';
 import { push } from 'react-router-redux';
-import config from '../../config';
+import { List, Divider, Segment, Sidebar, Container, Menu } from 'semantic-ui-react';
 import { asyncConnect } from 'redux-async-connect';
+import { Link } from 'react-router';
+
+import { isLoaded as isInfoLoaded, load as loadInfo } from '../../redux/modules/info';
+import { isLoaded as isAuthLoaded, load as loadAuth, logout } from '../../redux/modules/auth';
+import { InfoBar } from '../../components';
+import config from '../../config';
 
 @asyncConnect([{
-  promise: ({store: {dispatch, getState}}) => {
+  promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
 
     if (!isInfoLoaded(getState())) {
@@ -25,22 +25,31 @@ import { asyncConnect } from 'redux-async-connect';
     }
 
     return Promise.all(promises);
-  }
+  },
 }])
 @connect(
-  state => ({user: state.auth.user}),
-  {logout, pushState: push})
+  state => ({ user: state.auth.user && state.auth.user.name ? state.auth.user : null }),
+  { logout, pushState: push })
 export default class App extends Component {
   static propTypes = {
-    children: PropTypes.object.isRequired,
+    children: PropTypes.node.isRequired,
     user: PropTypes.object,
     logout: PropTypes.func.isRequired,
-    pushState: PropTypes.func.isRequired
+    pushState: PropTypes.func.isRequired,
+
+    routes: PropTypes.array,
   };
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeItem: props.routes[1].path || 'home',
+    };
+  }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
@@ -52,79 +61,102 @@ export default class App extends Component {
     }
   }
 
+  handleItemClick = (event, { name }) => this.setState({ activeItem: name });
+
   handleLogout = (event) => {
     event.preventDefault();
     this.props.logout();
   };
 
   render() {
-    const {user} = this.props;
+    const { user } = this.props;
     const styles = require('./App.scss');
+    const { activeItem } = this.state;
 
     return (
-      <div className={styles.app}>
-        <Helmet {...config.app.head}/>
-        <Navbar fixedTop>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <IndexLink to="/" activeStyle={{color: '#33e0ff'}}>
-                <div className={styles.brand}/>
-                <span>{config.app.title}</span>
-              </IndexLink>
-            </Navbar.Brand>
-            <Navbar.Toggle/>
-          </Navbar.Header>
+      <div>
+        <Helmet {...config.app.head} />
 
-          <Navbar.Collapse eventKey={0}>
-            <Nav navbar>
-              {user && <LinkContainer to="/chat">
-                <NavItem eventKey={1}>Chat</NavItem>
-              </LinkContainer>}
+        <Sidebar
+          as={Segment}
+          style={{ width: 250 }}
+          animation="overlay"
+          icon="labeled"
+          visible
+          vertical
+          inverted
+        >
+          <List divided inverted relaxed>
+            <List.Item style={{ paddingLeft: 10 }}>
+              <List.Icon>
+                <img src={require('../Home/flux-logo.png')} alt="" style={{ width: 30, height: 30 }} />
+              </List.Icon>
+              <List.Content verticalAlign="middle">
+                <Link to="/"><strong>HRFB &nbsp;<small><em>0.1.0</em></small></strong></Link>
+              </List.Content>
+            </List.Item>
+          </List>
+          <Menu inverted vertical style={{ width: '100%' }}>
+            <Menu.Item>
+              Menu
 
-              <LinkContainer to="/widgets">
-                <NavItem eventKey={2}>Widgets</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/survey">
-                <NavItem eventKey={3}>Survey</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/pagination">
-                <NavItem eventKey={4}>Pagination</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/about">
-                <NavItem eventKey={5}>About Us</NavItem>
-              </LinkContainer>
+              <Menu.Menu>
+                <Menu.Item as={Link} to="/" name="home" active={activeItem === 'home'} onClick={this.handleItemClick}>
+                  Home (list, link, message, redux)
+                </Menu.Item>
+                <Menu.Item as={Link} to="/about" name="about" active={activeItem === 'about'} onClick={this.handleItemClick}>
+                  About (widgets)
+                </Menu.Item>
+                <Menu.Item as={Link} to="/items" name="items" active={activeItem === 'items'} onClick={this.handleItemClick}>
+                  Items (fetching data asynchronously)
+                </Menu.Item>
+                <Menu.Item as={Link} to="/form" name="form" active={activeItem === 'form'} onClick={this.handleItemClick}>
+                  Form
+                </Menu.Item>
+                <Menu.Item as={Link} to="/todo" name="todo" active={activeItem === 'todo'} onClick={this.handleItemClick}>
+                  Todo
+                </Menu.Item>
+                {user ?
+                  <Menu.Item as={Link} to="/chat" name="chat" active={activeItem === 'chat'} onClick={this.handleItemClick}>
+                    Chat
+                  </Menu.Item>
+                : null}
+                <Menu.Item as={Link} to="/no_route_page" name="no_route_page">
+                  Not found (404 page)
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu.Item>
 
-              {!user &&
-              <LinkContainer to="/login">
-                <NavItem eventKey={6}>Login</NavItem>
-              </LinkContainer>}
-              {user &&
-              <LinkContainer to="/logout">
-                <NavItem eventKey={7} className="logout-link" onClick={this.handleLogout}>
-                  Logout
-                </NavItem>
-              </LinkContainer>}
-            </Nav>
-            {user &&
-            <p className={styles.loggedInMessage + ' navbar-text'}>Logged in as <strong>{user.name}</strong>.</p>}
-            <Nav navbar pullRight>
-              <NavItem eventKey={1} target="_blank" title="View on Github" href="https://github.com/erikras/react-redux-universal-hot-example">
-                <i className="fa fa-github"/>
-              </NavItem>
-            </Nav>
-          </Navbar.Collapse>
-        </Navbar>
+            <Menu.Item>
+              {user ?
+                <span>Logged as {user.name}</span>
+              :
+                <span>Member</span>
+              }
 
-        <div className={styles.appContent}>
-          {this.props.children}
-        </div>
-        <InfoBar/>
+              <Menu.Menu>
+                {user ?
+                  <Menu.Item as={Link} to="/logout" name="logout" onClick={this.handleLogout}>
+                    Logout
+                  </Menu.Item>
+                :
+                  <Menu.Item as={Link} to="/login" name="login" active={activeItem === 'login'} onClick={this.handleItemClick}>
+                    Login
+                  </Menu.Item>
+                }
+              </Menu.Menu>
+            </Menu.Item>
+          </Menu>
+        </Sidebar>
 
-        <div className="well text-center">
-          Have questions? Ask for help <a
-          href="https://github.com/erikras/react-redux-universal-hot-example/issues"
-          target="_blank">on Github</a> or in the <a
-          href="https://discord.gg/0ZcbPKXt5bZZb1Ko" target="_blank">#react-redux-universal</a> Discord channel.
+        <div className={styles.right}>
+          <Container>
+            {this.props.children}
+
+            <Divider />
+
+            <InfoBar />
+          </Container>
         </div>
       </div>
     );

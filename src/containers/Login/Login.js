@@ -1,52 +1,56 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
+// @flow
+/* eslint global-require: "off" */
+
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import * as authActions from 'redux/modules/auth';
+import { Icon, Message, Header, Input, Button, Form } from 'semantic-ui-react';
+import * as authActions from '../../redux/modules/auth';
 
 @connect(
-  state => ({user: state.auth.user}),
-  authActions)
+  state => ({ user: state.auth.user && state.auth.user.name ? state.auth.user : null }),
+  authActions,
+)
 export default class Login extends Component {
   static propTypes = {
     user: PropTypes.object,
     login: PropTypes.func,
-    logout: PropTypes.func
+    logout: PropTypes.func,
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const input = this.refs.username;
-    this.props.login(input.value);
-    input.value = '';
+  handleSubmit = (e, { formData }) => {
+    e.preventDefault();
+    this.props.login(formData.username);
   }
 
   render() {
-    const {user, logout} = this.props;
+    const { user, logout } = this.props;
     const styles = require('./Login.scss');
     return (
-      <div className={styles.loginPage + ' container'}>
-        <Helmet title="Login"/>
-        <h1>Login</h1>
+      <div className={`${styles.loginPage} container`}>
+        <Header as="h1">Login</Header>
+        <Helmet title="Login" />
         {!user &&
-        <div>
-          <form className="login-form form-inline" onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <input type="text" ref="username" placeholder="Enter a username" className="form-control"/>
-            </div>
-            <button className="btn btn-success" onClick={this.handleSubmit}><i className="fa fa-sign-in"/>{' '}Log In
-            </button>
-          </form>
-          <p>This will "log you in" as this user, storing the username in the session of the API server.</p>
-        </div>
+          <Form onSubmit={this.handleSubmit}>
+            <Message
+              info
+              content="This will *log you in* as this user, storing the username in the session of the API server."
+            />
+            <Form.Field inline>
+              <Input label="Your name" name="username" placeholder="Enter a username" />
+              {' '}
+              <Button primary type="submit"><Icon name="sign in" />{' '}log In</Button>
+            </Form.Field>
+          </Form>
         }
         {user &&
-        <div>
-          <p>You are currently logged in as {user.name}.</p>
-
           <div>
-            <button className="btn btn-danger" onClick={logout}><i className="fa fa-sign-out"/>{' '}Log Out</button>
+            <p>Hi, you are currently logged in as {user.name}.</p>
+
+            <div>
+              <Button secondary size="mini" onClick={logout}><Icon name="sign out" />{' '}Log Out</Button>
+            </div>
           </div>
-        </div>
         }
       </div>
     );

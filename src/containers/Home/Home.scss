@@ -1,5 +1,3 @@
-@import "../../theme/variables.scss";
-
 .home {
   dd {
     margin-bottom: 15px;
@@ -16,8 +14,8 @@
     height: $size;
     width: $size;
     border-radius: $size / 2;
-    border: 1px solid $cyan;
-    box-shadow: inset 0 0 10px $cyan;
+    border: 1px solid cyan;
+    box-shadow: inset 0 0 10px cyan;
     vertical-align: middle;
     p {
       line-height: $size;
@@ -29,7 +27,7 @@
     }
   }
   h1 {
-    color: $cyan;
+    color: cyan;
     font-size: 4em;
   }
   h2 {
@@ -44,9 +42,9 @@
     margin: 10px;
   }
   .humility {
-    color: $humility;
+    color: humility;
     a {
-      color: $humility;
+      color: humility;
     }
   }
   .github {
