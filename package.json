@@ -69,8 +69,8 @@
     "dev:server": "better-npm-run dev:server",
     "dev:client": "better-npm-run dev:client",
     "test": "karma start",
-    "test-node": "./node_modules/mocha/bin/mocha $(find src/server -name '*-test.js') --compilers js:babel-core/register",
-    "test-node-watch": "./node_modules/mocha/bin/mocha $(find src/server -name '*-test.js') --compilers js:babel-core/register --watch",
+    "test:node": "better-npm-run test:node",
+    "test:node:watch": "better-npm-run test:node:watch",
     "db:upgrade": "sequelize db:migrate",
     "db:downgrade": "sequelize db:migrate:undo",
     "db:create": "sequelize migration:create"
@@ -101,6 +101,18 @@
       "env": {
         "NODE_ENV": "production"
       }
+    },
+    "test:node": {
+      "command": "mocha $(find src/server -name '*-test.js') --compilers js:babel-core/register",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    "test:node:watch": {
+       "command": "mocha $(find src/server -name '*-test.js') --compilers js:babel-core/register --watch",
+       "env": {
+         "NODE_ENV": "test"
+       }
     }
   },
   "dependencies": {
@@ -115,6 +127,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.3.13",
     "babel-runtime": "^6.3.19",
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.14.1",
     "boom": "^4.2.0",
     "cheerio": "^0.22.0",

@@ -34,12 +34,14 @@ react full web stack with rendering server, hapi echosystem
 
     git clone https://github.com/eseom/hapi-react-fullstack-boilerplate.git
     yarn
-    npm run db:upgrade # db migration
-    npm run dev
+    yarn db:upgrade # for db migration
+    yarn dev
 
 **Testing**
 
-    npm test
+    yarn test
+    yarn test:node
+    yarn test:node:watch
 
 **API Interface**
 
