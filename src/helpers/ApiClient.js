@@ -4,10 +4,20 @@ import superagent from 'superagent';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
+// redundant to server/server.js
+let port;
+if (process.env.PORT) {
+  port = process.env.port;
+} else if (DEVELOPMENT) {
+  port = 3000;
+} else {
+  port = 8080;
+}
+
 function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? `/${path}` : path;
   if (SERVER) {
-    return `http://${process.env.APIHOST || 'localhost'}:3000${adjustedPath}`;
+    return `http://${process.env.HOST || 'localhost'}:${port}${adjustedPath}`;
   }
   // Prepend `/api` to relative URL, to proxy to API server.
   return adjustedPath;
