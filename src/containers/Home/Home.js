@@ -15,6 +15,7 @@ export default class Home extends Component {
     const items = [
       'HapiJS',
       'ReactJS',
+      'SSR',
       'Webpack2 + React-transform and react-transform-hmr',
       'React-Router',
       'Redux',

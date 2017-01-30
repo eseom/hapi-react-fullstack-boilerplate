@@ -14,6 +14,7 @@ react full web stack with rendering server, hapi echosystem
 ##Features
 * [HapiJS](https://github.com/hapijs/hapi)
 * [ReactJS](https://github.com/reactjs)
+* SSR
 * Webpack2 + [React-transform](https://github.com/gaearon/babel-plugin-react-transform) and [react-transform-hmr](https://github.com/gaearon/react-transform-hmr)
 * [React-Router](https://github.com/rackt/react-router)
 * [Redux](https://github.com/rackt/redux)
