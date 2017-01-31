@@ -49,14 +49,10 @@ export default class Html extends Component {
 
           <link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.css" rel="stylesheet" />
 
-          {/* (will be present only in development mode) */}
-          {/* outputs a <style/> tag with all bootstrap styles + App.scss + it could be CurrentPage.scss. */}
-          {/* can smoothen the initial style flash (flicker) on page load in development mode. */}
-          {/* ideally one could also include here the style for the current page (Home.scss, About.scss, etc) */}
           { Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={{ __html: require('../containers/App/App.scss')._style }} /> : null }
         </head>
         <body>
-          <div id="content" dangerouslySetInnerHTML={{ __html: content }} />
+          <div id="content" style={{ height: '100%' }} dangerouslySetInnerHTML={{ __html: content }} />
           <script dangerouslySetInnerHTML={{ __html: `window.processedStore=${serialize(store.getState())};` }} charSet="UTF-8" />
           <script src={assets.javascript.main} charSet="UTF-8" />
         </body>
