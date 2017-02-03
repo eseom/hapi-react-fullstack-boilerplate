@@ -2,7 +2,6 @@
 /* eslint global-require: "off" */
 
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 import { Icon, List, Message, Header } from 'semantic-ui-react';
 import { CounterButton } from '../../components';

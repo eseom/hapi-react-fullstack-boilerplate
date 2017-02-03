@@ -16,9 +16,10 @@ import createStore from '../redux/create';
 import ApiClient from '../helpers/ApiClient';
 import Html from '../helpers/Html';
 import getRoutes from '../routes';
-import logger from '../logger';
-import server from './server';
+import logger from './logger';
+import { getServer } from './core';
 
+const server = getServer();
 const pretty = new PrettyError();
 
 server.route({
@@ -78,6 +79,7 @@ server.route({
           reply(`<!doctype html>${ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />)}`);
         });
       } else {
+        // TODO not found
         reply('Not Found').code(404);
       }
     });

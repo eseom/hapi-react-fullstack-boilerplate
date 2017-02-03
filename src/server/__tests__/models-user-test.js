@@ -1,8 +1,9 @@
 // @flow
 
 import { expect } from 'chai';
-import { User, sequelize } from '../models';
-import logger from '../../logger';
+import { models } from '../core';
+
+const { User, sequelize } = models;
 
 before(async (done) => {
   await sequelize.sync({ force: true });

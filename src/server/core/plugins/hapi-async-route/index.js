@@ -5,7 +5,7 @@ import Boom from 'boom';
 
 let origRoute;
 
-exports.register = (server: Object, pOptions: Object, next: () => {}) => {
+const register = (server: Object, pOptions: Object, next: () => {}) => {
   const innerRoute = (options: Object) => {
     // work with async handler
     if (options.handler) {
@@ -15,8 +15,8 @@ exports.register = (server: Object, pOptions: Object, next: () => {}) => {
           const p = t(request, reply);
           if (p && p.catch) {
             p.catch((e) => {
-              console.error(e.stack);
-              console.error(e.toString());
+              console.error(e.stack);  // eslint-disable-line no-console
+              console.error(e.toString()); // eslint-disable-line no-console
               reply(Boom.badGateway('server error'));
             });
           }
@@ -26,9 +26,7 @@ exports.register = (server: Object, pOptions: Object, next: () => {}) => {
     return origRoute.apply(pOptions.server, [options]);
   };
 
-  // router = new Call.Router();
   origRoute = pOptions.server.route;
-  // pOptions.server.app.namedRoutes = namedRoutes;
 
   function route(options: Object) {
     if (Array.isArray(options)) {
@@ -40,7 +38,11 @@ exports.register = (server: Object, pOptions: Object, next: () => {}) => {
   next();
 };
 
-exports.register.attributes = {
+register.attributes = {
   name: 'hapi-async-handler',
   version: '0.0.1',
+};
+
+export {
+  register, // eslint-disable-line import/prefer-default-export
 };

@@ -3,7 +3,7 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import logger from '../src/logger';
+import logger from '../src/server/logger';
 
 const assetsPath = path.resolve(__dirname, '../static/dist');
 const host = 'localhost';

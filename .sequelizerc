@@ -1,7 +1,8 @@
-var path = require('path')
+require('./babel-require');
+
+const path = require('path');
 
 module.exports = {
-	config: path.resolve('src/server', 'database.json'),
-	'migrations-path': path.resolve('src/server', 'migrations'),
-	'models-path': path.resolve('src/server', 'models'),
+	config: path.resolve('src/server/core', 'database.js'),
+	'migrations-path': path.resolve('src/server/core', 'migrations'),
 }

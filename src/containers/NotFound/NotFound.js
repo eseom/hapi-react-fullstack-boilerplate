@@ -1,7 +1,9 @@
 // @flow
 
 import React, { Component, PropTypes } from 'react';
-import { Message } from 'semantic-ui-react';
+import { Link } from 'react-router';
+import Helmet from 'react-helmet';
+import { Header, Container, Message } from 'semantic-ui-react';
 
 export default class NotFound extends Component {
   static propTypes = {
@@ -10,14 +12,16 @@ export default class NotFound extends Component {
 
   render() {
     return (
-      <div className="container">
-        <h1>404 not found!</h1>
+      <Container style={{ paddingTop: 40 }}>
+        <Helmet title="404 not found" />
+        <Header as="h1">404 not found!</Header>
         <Message
           error
           header="There is no such path."
           content={this.props.location.pathname}
         />
-      </div>
+        <Link to="/">back to the main</Link>
+      </Container>
     );
   }
 }

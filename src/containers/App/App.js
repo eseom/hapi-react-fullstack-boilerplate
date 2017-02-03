@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { push } from 'react-router-redux';
-import { Header, Button, List, Divider, Segment, Sidebar, Container, Menu } from 'semantic-ui-react';
+import { Button, List, Divider, Segment, Sidebar, Container, Menu } from 'semantic-ui-react';
 import { asyncConnect } from 'redux-async-connect';
 import { Link } from 'react-router';
 
@@ -74,6 +74,10 @@ export default class App extends Component {
     event.preventDefault();
     this.props.logout();
   };
+
+  toggleVisibility = () => {
+    this.setState({ sidebarVisible: !this.state.sidebarVisible });
+  }
 
   render() {
     const { user } = this.props;
@@ -196,9 +200,5 @@ export default class App extends Component {
         </Sidebar.Pushable>
       </div>
     );
-  }
-
-  toggleVisibility = () => {
-    this.setState({ sidebarVisible: !this.state.sidebarVisible });
   }
 }

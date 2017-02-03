@@ -6,7 +6,7 @@ import Hapi from 'hapi';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from './webpack.config.development';
-import logger from '../src/logger';
+import logger from '../src/server/logger';
 
 const compiler = webpack(webpackConfig);
 const host = 'localhost';
