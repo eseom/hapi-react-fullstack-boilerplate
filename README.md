@@ -29,6 +29,9 @@ react full web stack with rendering server, hapi echosystem
 * sass loader, node sass
 * [SemanticUI](https://github.com/Semantic-Org/Semantic-UI)
 
+## Extra features
+* Django style Hapi module structure
+
 ## Usage
 **Clone this repository**
 

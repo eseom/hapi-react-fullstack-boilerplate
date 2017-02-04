@@ -27,10 +27,11 @@ export default class About extends Component {
           icon
         >
           <span>
-            This project was originally created by Erik Rasmussen
-            (<a href="https://twitter.com/erikras" rel="noopener noreferrer" target="_blank">@erikras</a>),
-            but has since seen many contributions
-            from the open source community. And forked by @eseom.
+            This project was created by Eunseok Eom
+            (<a href="https://github.com/eseom" rel="noopener noreferrer" target="_blank">@eseom</a>),
+            based on
+            (<a href="https://twitter.com/erikras" rel="noopener noreferrer" target="_blank">@erikras</a>)&apos;s project,
+            react-redux-universal-hot-example.
           </span>
         </Message>
 
