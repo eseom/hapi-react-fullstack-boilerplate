@@ -1,6 +1,7 @@
 // @flow
 /* eslint react/no-danger: "off" */
 /* eslint global-require: "off" */
+/* eslint no-underscore-dangle: "off" */
 
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom/server';

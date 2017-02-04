@@ -1,9 +1,9 @@
 // @flow
 
 import { expect } from 'chai';
-import { models } from '../core';
+import { models, sequelize } from '../core';
 
-const { User, sequelize } = models;
+const { User } = models;
 
 before(async (done) => {
   await sequelize.sync({ force: true });
@@ -28,7 +28,9 @@ describe('UserTest', () => {
 
   it('get the saved user', async () => {
     const user = await User.find({
-      username: 'example-user',
+      where: {
+        username: 'example-user',
+      },
     });
     expect(user.username).equal('example-user');
     expect(user.authenticate('foobar2')).equal(false);
