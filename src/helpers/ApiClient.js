@@ -1,5 +1,3 @@
-// @flow
-
 import superagent from 'superagent';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];

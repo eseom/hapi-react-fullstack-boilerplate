@@ -1,4 +1,3 @@
-// @flow
 /* eslint global-require: "off" */
 
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';

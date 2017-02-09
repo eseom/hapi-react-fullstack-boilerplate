@@ -1,5 +1,3 @@
-// @flow
-
 import winston from 'winston';
 
 const logger = new (winston.Logger)({

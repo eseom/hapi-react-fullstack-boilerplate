@@ -1,4 +1,3 @@
-// @flow
 /* eslint import/no-extraneous-dependencies: "off" */
 /* eslint global-require: "off" */
 

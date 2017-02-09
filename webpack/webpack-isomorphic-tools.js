@@ -1,4 +1,3 @@
-// @flow
 /* eslint import/no-extraneous-dependencies: "off" */
 
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');

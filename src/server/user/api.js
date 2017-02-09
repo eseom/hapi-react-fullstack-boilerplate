@@ -1,5 +1,3 @@
-// @flow
-
 import Joi from 'joi';
 import { route } from '../core';
 

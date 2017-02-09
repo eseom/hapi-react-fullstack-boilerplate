@@ -1,4 +1,3 @@
-// @flow
 /* eslint global-require: "off" */
 
 import React, { Component } from 'react';

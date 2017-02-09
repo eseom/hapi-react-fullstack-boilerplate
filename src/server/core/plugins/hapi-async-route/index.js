@@ -1,4 +1,3 @@
-// @flow
 /* eslint no-param-reassign: "off" */
 
 import Boom from 'boom';

@@ -1,5 +1,3 @@
-// @flow
-
 import { expect } from 'chai';
 import { models, sequelize } from '../core';
 

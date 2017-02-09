@@ -1,4 +1,3 @@
-// @flow
 /* eslint global-require: "off" */
 /* eslint react/no-find-dom-node: "off" */
 

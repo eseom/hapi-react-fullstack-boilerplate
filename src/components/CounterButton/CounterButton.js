@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component, PropTypes } from 'react';
 import { connectMultireducer } from 'multireducer';
 import { Button } from 'semantic-ui-react';

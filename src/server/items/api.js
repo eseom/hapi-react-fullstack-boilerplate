@@ -1,5 +1,3 @@
-// @flow
-
 import Boom from 'boom';
 import { route } from '../core';
 import getItems from './getter';

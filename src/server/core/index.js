@@ -1,5 +1,3 @@
-// @flow
-
 import Hapi from 'hapi';
 import fs from 'fs';
 import joi from 'joi';

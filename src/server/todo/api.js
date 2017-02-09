@@ -1,5 +1,3 @@
-// @flow
-
 import Boom from 'boom';
 import Joi from 'joi';
 import logger from '../logger';

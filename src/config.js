@@ -1,5 +1,3 @@
-// @flow
-
 export default {
   app: {
     title: 'hapi-react-fullstack-boilerplate',

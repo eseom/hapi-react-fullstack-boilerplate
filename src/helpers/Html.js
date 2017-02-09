@@ -1,4 +1,3 @@
-// @flow
 /* eslint react/no-danger: "off" */
 /* eslint global-require: "off" */
 /* eslint no-underscore-dangle: "off" */

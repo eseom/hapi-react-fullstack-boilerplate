@@ -1,5 +1,3 @@
-// @flow
-
 try {
   const config = require('./package.json').babel;
   require('babel-register')(config);

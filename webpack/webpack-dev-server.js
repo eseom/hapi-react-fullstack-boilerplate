@@ -1,4 +1,3 @@
-// @flow
 /* eslint import/no-extraneous-dependencies: "off" */
 
 import webpack from 'webpack';
@@ -54,4 +53,4 @@ app.ext('onRequest', (request, reply) => {
 
 app.start();
 
-logger.info('🚧  Webpack development server listening on port %s', port);
+logger.info('🚧 webpack development server listening on port %s', port);

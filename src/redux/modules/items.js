@@ -1,5 +1,3 @@
-// @flow
-
 const LOAD = 'items/LOAD';
 const LOAD_SUCCESS = 'items/LOAD_SUCCESS';
 const LOAD_FAIL = 'items/LOAD_FAIL';

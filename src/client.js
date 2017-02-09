@@ -1,4 +1,3 @@
-// @flow
 /* eslint no-console: "off" */
 
 import 'babel-polyfill';

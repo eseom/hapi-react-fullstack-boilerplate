@@ -1,4 +1,3 @@
-// @flow
 /* eslint import/no-extraneous-dependencies: "off" */
 
 import path from 'path';
