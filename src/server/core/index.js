@@ -15,13 +15,23 @@ const models = {};
 
 // prepare db connection
 const dbconfig = settings.database[process.env.NODE_ENV];
-const sequelize = new Sequelize(
-  dbconfig.database, dbconfig.username,
-  dbconfig.password, {
-    storage: dbconfig.storage,
+let sequelizeWithOption;
+
+if (dbconfig.uri) {
+  sequelizeWithOption = new Sequelize(dbconfig.uri, {
     dialect: dbconfig.dialect,
-  },
-);
+    protocol: dbconfig.protocol,
+    dialectOptions: dbconfig.dialectOptions,
+  });
+} else {
+  sequelizeWithOption = new Sequelize(
+    dbconfig.database, dbconfig.username,
+    dbconfig.password, {
+      storage: dbconfig.storage,
+      dialect: dbconfig.dialect,
+    },
+  );
+}
 
 const apps = [...settings.apps, 'core'];
 const modules = [];
@@ -38,7 +48,7 @@ apps.forEach((app) => {
     }
     try {
       if (mod === 'model') {
-        const importedModels = sequelize.import(file);
+        const importedModels = sequelizeWithOption.import(file);
         Object.keys(importedModels).forEach((it) => {
           models[it] = importedModels[it];
         });
@@ -245,6 +255,8 @@ const route = {
     },
   }),
 };
+
+const sequelize = sequelizeWithOption;
 
 export {
   modules,

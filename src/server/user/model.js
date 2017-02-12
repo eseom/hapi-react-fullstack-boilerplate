@@ -1,7 +1,7 @@
 // @flow
 /* eslint no-param-reassign: "off" */
 
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt-nodejs';
 
 const hasSecurePassword = (user, options, callback) => {
   if (user.password !== user.passwordConfirmation) {

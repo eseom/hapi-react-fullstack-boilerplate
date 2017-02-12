@@ -62,7 +62,7 @@
     "start": "concurrent --kill-others \"npm run server\"",
     "server": "better-npm-run server",
     "build": "better-npm-run build",
-    "postinstall": "node node_modules/phantomjs-prebuilt/install.js && npm run build",
+    "postinstall": "node node_modules/phantomjs-prebuilt/install.js && node node_modules/node-sass/scripts/install.js && npm run build",
     "lint": "eslint -c .eslintrc src",
     "dev": "concurrent --kill-others \"npm run dev:client\" \"npm run dev:server\"",
     "dev:server": "better-npm-run dev:server",
@@ -126,7 +126,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "babel-register": "^6.3.13",
     "babel-runtime": "^6.3.19",
-    "bcrypt": "^1.0.2",
+    "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.14.1",
     "boom": "^4.2.0",
     "cheerio": "^0.22.0",
@@ -147,6 +147,7 @@
     "map-props": "^1.0.0",
     "multireducer": "^2.0.0",
     "node-fetch": "^1.6.3",
+    "pg": "^6.1.2",
     "piping": "^0.3.0",
     "pretty-error": "^1.2.0",
     "react": "0.14.8",
@@ -226,6 +227,6 @@
     "webpack-isomorphic-tools": "^2.6.6"
   },
   "engines": {
-    "node": "5.6.0"
+    "node": "5.10.0"
   }
 }

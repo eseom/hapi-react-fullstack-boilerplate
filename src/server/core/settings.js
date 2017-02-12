@@ -15,8 +15,13 @@ export default {
       dialect: 'sqlite',
     },
     production: {
-      storage: 'production.database',
-      dialect: 'sqlite',
+      uri: process.env.DATABASE_URL,
+      dialect: 'postgres',
+      protocol: 'postgres',
+      dialectOptions: {
+        ssl: true,
+      },
+      use_env_variable: 'DATABASE_URL',
     },
   },
 };
