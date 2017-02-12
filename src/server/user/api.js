@@ -1,6 +1,8 @@
 import Joi from 'joi';
-import { route } from '../core';
+import Boom from 'boom';
+import { route, models } from '../core';
 
+const { User } = models;
 const nestedRoute = route.nested('/api');
 
 nestedRoute.get('/loadAuth', async (request, reply) => {
@@ -10,16 +12,33 @@ nestedRoute.get('/loadAuth', async (request, reply) => {
 });
 
 nestedRoute.post('/login', async (request, reply) => {
-  const user = {
-    name: request.payload.name,
-  };
-  request.yar.set('user', user);
-  reply(user);
+  const username = request.payload.username;
+  const user = await User.find({
+    where: {
+      username,
+    },
+  });
+  if (!user) {
+    reply(Boom.unauthorized(`no such user: ${username}`));
+    return;
+  }
+  const authenticated = user.authenticate(request.payload.password);
+  if (authenticated) {
+    setTimeout(() => { // delay 1 second for testing
+      request.yar.set('user', user);
+      reply(user);
+    }, 1000);
+  } else {
+    setTimeout(() => { // delay 1 second for testing
+      reply(Boom.unauthorized('password mismatch'));
+    }, 2000);
+  }
 }, {
   tags: ['api'],
   validate: {
     payload: {
-      name: Joi.string().required(),
+      username: Joi.string().required(),
+      password: Joi.string().required(),
     },
   },
 });

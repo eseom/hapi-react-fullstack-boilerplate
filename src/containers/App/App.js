@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { push } from 'react-router-redux';
-import { Button, List, Divider, Segment, Sidebar, Container, Menu } from 'semantic-ui-react';
+import { Dropdown, Button, List, Divider, Segment, Sidebar, Container, Menu } from 'semantic-ui-react';
 import { asyncConnect } from 'redux-async-connect';
 import { Link } from 'react-router';
 
@@ -26,7 +26,7 @@ import config from '../../config';
   },
 }])
 @connect(
-  state => ({ user: state.auth.user && state.auth.user.name ? state.auth.user : null }),
+  state => ({ user: state.auth.user && state.auth.user.username ? state.auth.user : null }),
   { logout, pushState: push })
 export default class App extends Component {
   static propTypes = {
@@ -34,7 +34,6 @@ export default class App extends Component {
     user: PropTypes.object,
     logout: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired,
-
     routes: PropTypes.array,
   };
 
@@ -140,7 +139,7 @@ export default class App extends Component {
 
               <Menu.Item>
                 {user ?
-                  <span>Logged as {user.name}</span>
+                  <span>Logged as {user.username}</span>
                 :
                   <span>Member</span>
                 }
@@ -185,7 +184,23 @@ export default class App extends Component {
                   hapi react fullstack boilerplate
                 </div>
                 <div className="right menu">
-                  <div className="vertically fitted borderless item" />
+                  <div className="vertically fitted borderless item">
+                    <div className="item">
+                      {!user
+                        ?
+                          <Link to="/login">Login</Link>
+                        :
+                          <Dropdown text={user.username}>
+                            <Dropdown.Menu>
+                              <Dropdown.Item icon="user" text="Profile" />
+                              <Menu.Item as={Link} to="/logout" name="logout" onClick={this.handleLogout}>
+                                Logout
+                              </Menu.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                      }
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

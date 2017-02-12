@@ -48,6 +48,11 @@ export default (sequelize, DataTypes) => {
         if (bcrypt.compareSync(value, this.passwordDigest)) return true;
         return false;
       },
+      toJSON: function toJSON() {
+        const values = Object.assign({}, this.get());
+        delete values.passwordDigest;
+        return values;
+      },
     },
     classMethods: {
       associate: (models) => {

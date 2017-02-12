@@ -5,7 +5,7 @@ import { Icon, Header, Button } from 'semantic-ui-react';
 import * as authActions from '../../redux/modules/auth';
 
 @connect(
-  state => ({ user: state.auth.user && state.auth.user.name ? state.auth.user : null }),
+  state => ({ user: state.auth.user && state.auth.user.username ? state.auth.user : null }),
   authActions)
 export default class LoginSuccess extends Component {
   static propTypes = {
@@ -23,7 +23,7 @@ export default class LoginSuccess extends Component {
         <Header as="h1">Login Success</Header>
         <div>
           <p>
-            Hi, {user.name}. You have just successfully logged in,
+            Hi, {user.username}. You have just successfully logged in,
             and were forwarded here
             by <code>componentWillReceiveProps()</code> in <code>App.js</code>,
             which is listening to
