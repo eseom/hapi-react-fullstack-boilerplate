@@ -9,7 +9,6 @@ import {
     About,
     Login,
     LoginSuccess,
-    Form,
     Todo,
     NotFound,
   } from './containers';
@@ -51,7 +50,6 @@ export default (store) => {
         <Route path="about" component={About} />
         <Route path="login" component={Login} />
         <Route path="items" component={Items} />
-        <Route path="form" component={Form} />
         <Route path="todo" component={Todo} />
       </Route>
 

@@ -1,6 +1,6 @@
 // @flow
 
-export default (sequelize, DataTypes) => {
+export default (sequelize: Object, DataTypes: Object) => {
   const { INTEGER, STRING, DATE } = DataTypes;
   const Todo = sequelize.define('todos', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true, scopes: ['public'] },

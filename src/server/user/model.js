@@ -14,7 +14,7 @@ const hasSecurePassword = (user, options, callback) => {
   });
 };
 
-export default (sequelize, DataTypes) => {
+export default (sequelize: Object, DataTypes: Object) => {
   const { INTEGER, STRING, VIRTUAL, DATE } = DataTypes;
 
   // https://nodeontrain.xyz/tuts/secure_password/
