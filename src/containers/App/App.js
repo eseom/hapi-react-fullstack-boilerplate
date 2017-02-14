@@ -120,9 +120,6 @@ export default class App extends Component {
                   <Menu.Item as={Link} to="/items" name="items" active={activeItem === 'items'} onClick={this.handleItemClick}>
                     Items (fetching data asynchronously)
                   </Menu.Item>
-                  <Menu.Item as={Link} to="/form" name="form" active={activeItem === 'form'} onClick={this.handleItemClick}>
-                    Form
-                  </Menu.Item>
                   <Menu.Item as={Link} to="/todo" name="todo" active={activeItem === 'todo'} onClick={this.handleItemClick}>
                     Todo
                   </Menu.Item>

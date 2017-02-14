@@ -31,6 +31,10 @@ react full web stack with rendering server, hapi echosystem
 
 ## Extra features
 * Django style Hapi module structure
+* custom console execution with the context
+```bash
+yarn exec items get # see src/server/items/command.js
+```
 
 ## Usage
 **Clone this repository**
@@ -56,7 +60,7 @@ react full web stack with rendering server, hapi echosystem
 apm install editorconfig es6-javascript atom-ternjs javascript-snippets linter linter-eslint language-babel autocomplete-modules file-icons
 ```
 
-##Todo
+## Todo
 * [ ] oauth2 authentication...
 
 ## License

@@ -61,6 +61,7 @@
   "scripts": {
     "start": "concurrent --kill-others \"npm run server\"",
     "server": "better-npm-run server",
+    "exec": "better-npm-run exec",
     "build": "better-npm-run build",
     "postinstall": "node node_modules/phantomjs-prebuilt/install.js && node node_modules/node-sass/scripts/install.js && npm run build",
     "lint": "eslint -c .eslintrc src",
@@ -79,6 +80,12 @@
       "command": "node bin/server",
       "env": {
         "NODE_PATH": "./src",
+        "NODE_ENV": "production"
+      }
+    },
+    "exec": {
+      "command": "node bin/console",
+      "env": {
         "NODE_ENV": "production"
       }
     },

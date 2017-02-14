@@ -1,3 +1,5 @@
+// @flow
+
 import Hapi from 'hapi';
 import fs from 'fs';
 import joi from 'joi';
@@ -12,6 +14,17 @@ import settings from './settings';
 
 const handlers = [];
 const models = {};
+const commands = {};
+const command = {};
+
+command.route = (mod: string, identifier: string, callback: () => {}) => {
+  if (typeof commands[mod] === 'undefined') commands[mod] = {};
+  commands[mod][identifier] = callback;
+};
+
+command.execute = (mod: string, identifier: string) => {
+  commands[mod][identifier]();
+};
 
 // prepare db connection
 const dbconfig = settings.database[process.env.NODE_ENV];
@@ -34,12 +47,19 @@ if (dbconfig.uri) {
 }
 
 const apps = [...settings.apps, 'core'];
-const modules = [];
-modules.install = () =>
-  modules.forEach(it => require(it)); // eslint-disable-line import/no-dynamic-require
+const modules = {
+  items: [],
+  push: (item: string) => {
+    modules.items.push(item);
+  },
+  install: () => {
+    modules.items.forEach(it => require(it)); // eslint-disable-line import/no-dynamic-require
+  },
+};
 
 apps.forEach((app) => {
-  ['model', 'view', 'api'].forEach((mod) => {
+  ['model', 'view', 'api', 'command'].forEach((mod) => {
+    // TODO load command separately
     const file = `../${app}/${mod}`;
     try {
       fs.statSync(`${__dirname}/${file}.js`);
@@ -144,7 +164,7 @@ const getServer = () => {
   handlers.forEach(handler => server.route(handler));
 
   return server;
-}
+};
 
 const get = (
   path: string,
@@ -261,6 +281,7 @@ const sequelize = sequelizeWithOption;
 export {
   modules,
   route,
+  command,
   models,
   sequelize,
   logger,
