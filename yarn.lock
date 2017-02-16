@@ -3307,6 +3307,12 @@ handlebars@^4.0.5:
   optionalDependencies:
     uglify-js "^2.6"
 
+hapi-es7-async-handler@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/hapi-es7-async-handler/-/hapi-es7-async-handler-1.0.0.tgz#8f62deb417a4ffe270617c7f625c7cad7d9f4b8d"
+  dependencies:
+    boom "^4.2.0"
+
 hapi-swagger@^7.6.0:
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/hapi-swagger/-/hapi-swagger-7.6.0.tgz#20d84d388409992c416bfb098a00869cb5e72a20"

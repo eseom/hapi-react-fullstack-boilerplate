@@ -83,7 +83,7 @@ Object.keys(models).forEach((modelName) => {
   if ('associate' in models[modelName]) models[modelName].associate(models);
 });
 
-const getServer = () => {
+const getServer = async () => {
   let port;
 
   if (process.env.PORT) {
@@ -100,35 +100,41 @@ const getServer = () => {
     port,
   });
 
-  server.register([
-    Inert,
-    Vision,
-    {
-      register: require('yar'),
-      options: {
-        storeBlank: false,
-        cookieOptions: {
-          password: 'the-password-must-be-at-least-32-characters-long',
-          isSecure: false,
+  try {
+    await (new Promise((resolve, reject) => {
+      server.register([
+        Inert,
+        Vision,
+        {
+          register: require('yar'),
+          options: {
+            storeBlank: false,
+            cookieOptions: {
+              password: 'the-password-must-be-at-least-32-characters-long',
+              isSecure: false,
+            },
+          },
         },
-      },
-    },
-    {
-      register: require('./plugins/hapi-async-route'),
-      options: {
-        server,
-      },
-    },
-    {
-      register: require('hapi-swagger'),
-      options: {
-        info: {
-          title: 'Test API Documentation',
-          version: '0.1',
+        {
+          register: require('hapi-es7-async-handler'),
         },
-      },
-    },
-  ]);
+        {
+          register: require('hapi-swagger'),
+          options: {
+            info: {
+              title: 'Test API Documentation',
+              version: '0.1',
+            },
+          },
+        },
+      ], (err) => {
+        if (err) reject(err);
+        resolve(true);
+      });
+    }));
+  } catch (e) {
+    logger.error(e, e.stack);
+  }
 
   /* socket io */
 
