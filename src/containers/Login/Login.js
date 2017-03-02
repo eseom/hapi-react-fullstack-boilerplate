@@ -1,24 +1,24 @@
 /* eslint global-require: "off" */
 
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-import { Icon, Message, Header, Button, Form } from 'semantic-ui-react';
-import { reduxForm, Field } from 'redux-form';
-import * as authActions from '../../redux/modules/auth';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import Helmet from 'react-helmet'
+import { Icon, Message, Header, Button, Form } from 'semantic-ui-react'
+import { reduxForm, Field } from 'redux-form'
+import * as authActions from '../../redux/modules/auth'
 
-const defaultLoginError = { error: false, message: '' };
+const defaultLoginError = { error: false, message: '' }
 
 const validate = (values) => {
-  const errors = {};
+  const errors = {}
   if (!values.username) {
-    errors.username = 'required';
+    errors.username = 'required'
   }
   if (!values.password) {
-    errors.password = 'required';
+    errors.password = 'required'
   }
-  return errors;
-};
+  return errors
+}
 
 @connect(
   store => ({
@@ -55,11 +55,11 @@ export default class extends Component {
     this.setState({
       loginError: (!this.props.loginError && props.loginError ?
         props.loginError : defaultLoginError),
-    });
+    })
   }
 
   handleSubmit = (formData) => {
-    this.props.login(formData.username, formData.password);
+    this.props.login(formData.username, formData.password)
   }
 
   renderTextInput = ({ input, label, type, meta: { touched, error, warning } }) => (
@@ -73,15 +73,15 @@ export default class extends Component {
         {...input}
       />
     </Form.Field>
-  );
+  )
 
   render() {
-    const styles = require('./Login.scss');
+    const styles = require('./Login.scss')
     const {
        user, logout, loggingIn,
        handleSubmit, pristine, reset, submitting,
-    } = this.props;
-    const { loginError } = this.state;
+    } = this.props
+    const { loginError } = this.state
     return (
       <div className={`${styles.loginPage} container`}>
         <Header as="h1">Login</Header>
@@ -141,6 +141,6 @@ export default class extends Component {
           </div>
         }
       </div>
-    );
+    )
   }
 }

@@ -1,21 +1,21 @@
 /* eslint import/no-extraneous-dependencies: "off" */
 /* eslint global-require: "off" */
 
-require('babel-polyfill');
+require('babel-polyfill')
 
 // Webpack config for creating the production bundle.
-const path = require('path');
-const webpack = require('webpack');
-const CleanPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const strip = require('strip-loader');
+const path = require('path')
+const webpack = require('webpack')
+const CleanPlugin = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const strip = require('strip-loader')
 
-const projectRootPath = path.resolve(__dirname, '../');
-const assetsPath = path.resolve(projectRootPath, './static/dist');
+const projectRootPath = path.resolve(__dirname, '../')
+const assetsPath = path.resolve(projectRootPath, './static/dist')
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
-const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
-const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
+const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin')
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./isomorphic-tools'))
 
 module.exports = {
   devtool: 'source-map',
@@ -81,4 +81,4 @@ module.exports = {
     }),
     webpackIsomorphicToolsPlugin,
   ],
-};
+}

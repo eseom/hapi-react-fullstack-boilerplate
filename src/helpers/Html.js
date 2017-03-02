@@ -2,10 +2,10 @@
 /* eslint global-require: "off" */
 /* eslint no-underscore-dangle: "off" */
 
-import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom/server';
-import serialize from 'serialize-javascript';
-import Helmet from 'react-helmet';
+import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom/server'
+import serialize from 'serialize-javascript'
+import Helmet from 'react-helmet'
 
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -21,12 +21,12 @@ export default class Html extends Component {
     assets: PropTypes.object,
     component: PropTypes.node,
     store: PropTypes.object,
-  };
+  }
 
   render() {
-    const { assets, component, store } = this.props;
-    const content = component ? ReactDOM.renderToString(component) : '';
-    const head = Helmet.rewind();
+    const { assets, component, store } = this.props
+    const content = component ? ReactDOM.renderToString(component) : ''
+    const head = Helmet.rewind()
 
     return (
       <html lang="en">
@@ -57,6 +57,6 @@ export default class Html extends Component {
           <script src={assets.javascript.main} charSet="UTF-8" />
         </body>
       </html>
-    );
+    )
   }
 }

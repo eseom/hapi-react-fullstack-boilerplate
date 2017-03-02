@@ -1,14 +1,14 @@
 /* eslint global-require: "off" */
 
-import React, { Component } from 'react';
-import Helmet from 'react-helmet';
-import { Icon, List, Message, Header } from 'semantic-ui-react';
-import { CounterButton } from '../../components';
-import config from '../../config';
+import React, { Component } from 'react'
+import Helmet from 'react-helmet'
+import { Icon, List, Message, Header } from 'semantic-ui-react'
+import { CounterButton } from '../../components'
+import config from '../../config'
 
 export default class Home extends Component {
   render() {
-    const styles = require('./Home.scss');
+    const styles = require('./Home.scss')
     // require the logo image both from client and server
     const items = [
       'HapiJS',
@@ -27,7 +27,7 @@ export default class Home extends Component {
       'Socket.io',
       'sass loader, node sass',
       'SemanticUI',
-    ];
+    ]
     return (
       <div className={styles.home}>
         <Header as="h1">{config.app.title}</Header>
@@ -63,6 +63,6 @@ export default class Home extends Component {
           <CounterButton multireducerKey="counter3" color="violet" basic />
         </p>
       </div>
-    );
+    )
   }
 }

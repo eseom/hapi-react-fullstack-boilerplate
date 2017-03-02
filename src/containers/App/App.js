@@ -1,28 +1,28 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-import { push } from 'react-router-redux';
-import { Dropdown, Button, List, Divider, Segment, Sidebar, Container, Menu } from 'semantic-ui-react';
-import { asyncConnect } from 'redux-async-connect';
-import { Link } from 'react-router';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import Helmet from 'react-helmet'
+import { push } from 'react-router-redux'
+import { Dropdown, Button, List, Divider, Segment, Sidebar, Container, Menu } from 'semantic-ui-react'
+import { asyncConnect } from 'redux-async-connect'
+import { Link } from 'react-router'
 
-import { isLoaded as isInfoLoaded, load as loadInfo } from '../../redux/modules/info';
-import { isLoaded as isAuthLoaded, load as loadAuth, logout } from '../../redux/modules/auth';
-import { InfoBar } from '../../components';
-import config from '../../config';
+import { isLoaded as isInfoLoaded, load as loadInfo } from '../../redux/modules/info'
+import { isLoaded as isAuthLoaded, load as loadAuth, logout } from '../../redux/modules/auth'
+import { InfoBar } from '../../components'
+import config from '../../config'
 
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
-    const promises = [];
+    const promises = []
 
     if (!isInfoLoaded(getState())) {
-      promises.push(dispatch(loadInfo()));
+      promises.push(dispatch(loadInfo()))
     }
     if (!isAuthLoaded(getState())) {
-      promises.push(dispatch(loadAuth()));
+      promises.push(dispatch(loadAuth()))
     }
 
-    return Promise.all(promises);
+    return Promise.all(promises)
   },
 }])
 @connect(
@@ -35,51 +35,51 @@ export default class App extends Component {
     logout: PropTypes.func.isRequired,
     pushState: PropTypes.func.isRequired,
     routes: PropTypes.array,
-  };
+  }
 
   static contextTypes = {
     store: PropTypes.object.isRequired,
-  };
+  }
 
   static state = {
     sidebarVisible: false,
-  };
+  }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       activeItem: props.routes[1].path || 'home',
-    };
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
       // login
-      this.props.pushState('/loginSuccess');
+      this.props.pushState('/loginSuccess')
     } else if (this.props.user && !nextProps.user) {
       // logout
-      this.props.pushState('/');
+      this.props.pushState('/')
     }
   }
 
   handleItemClick = (event, { name }) => this.setState({
     activeItem: name,
     sidebarVisible: false,
-  });
+  })
 
   handleLogout = (event) => {
-    event.preventDefault();
-    this.props.logout();
-  };
+    event.preventDefault()
+    this.props.logout()
+  }
 
   toggleVisibility = () => {
-    this.setState({ sidebarVisible: !this.state.sidebarVisible });
+    this.setState({ sidebarVisible: !this.state.sidebarVisible })
   }
 
   render() {
-    const { user } = this.props;
-    const styles = require('./App.scss');
-    const { activeItem } = this.state;
+    const { user } = this.props
+    const styles = require('./App.scss')
+    const { activeItem } = this.state
 
     return (
       <div style={{ height: '100%' }}>
@@ -166,7 +166,7 @@ export default class App extends Component {
             dimmed={this.state.sidebarVisible}
             onClick={() => {
               if (this.state.sidebarVisible) {
-                this.toggleVisibility();
+                this.toggleVisibility()
               }
             }}
           >
@@ -209,6 +209,6 @@ export default class App extends Component {
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
-    );
+    )
   }
 }

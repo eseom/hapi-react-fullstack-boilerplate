@@ -1,19 +1,19 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-async-connect';
-import { Message, Button, Icon, Table } from 'semantic-ui-react';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { asyncConnect } from 'redux-async-connect'
+import { Message, Button, Icon, Table } from 'semantic-ui-react'
 
-import * as itemsActions from '../../redux/modules/items';
+import * as itemsActions from '../../redux/modules/items'
 
-const { isLoaded, load: loadItems } = itemsActions;
+const { isLoaded, load: loadItems } = itemsActions
 
 @asyncConnect([{
   deferred: true,
   promise: ({ store: { dispatch, getState } }) => {
     if (!isLoaded(getState())) {
-      return dispatch(loadItems());
+      return dispatch(loadItems())
     }
-    return undefined;
+    return undefined
   },
 }])
 @connect(store => ({
@@ -30,7 +30,7 @@ export default class extends Component {
     loading: PropTypes.bool,
     load: PropTypes.func.isRequired,
     // editStart: PropTypes.func.isRequired,
-  };
+  }
 
   renderTable = (error, items) => {
     if (!error && !items) {
@@ -39,7 +39,7 @@ export default class extends Component {
           info
           content="loading..."
         />
-      );
+      )
     }
     if (error) {
       return (
@@ -47,7 +47,7 @@ export default class extends Component {
           error
           content="failed to load items."
         />
-      );
+      )
     }
     return (
       <Table celled definition compact>
@@ -79,14 +79,14 @@ export default class extends Component {
           </Table.Row>
         </Table.Footer>
       </Table>
-    );
+    )
   }
 
   render() {
-    const { items, error, loading, load } = this.props;
-    let refreshClassName = 'refresh';
+    const { items, error, loading, load } = this.props
+    let refreshClassName = 'refresh'
     if (loading) {
-      refreshClassName = 'asterisk';
+      refreshClassName = 'asterisk'
     }
     return (
       <div>
@@ -109,6 +109,6 @@ export default class extends Component {
 
         {this.renderTable(error, items)}
       </div>
-    );
+    )
   }
 }

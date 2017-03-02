@@ -1,62 +1,62 @@
 /* eslint import/no-extraneous-dependencies: "off" */
 
-import path from 'path';
-import webpack from 'webpack';
-import logger from '../src/server/logger';
+import path from 'path'
+import webpack from 'webpack'
+import logger from '../src/server/logger'
 
-const assetsPath = path.resolve(__dirname, '../static/dist');
-const host = 'localhost';
-const port = process.env.NODE_ENV || 3001;
+const assetsPath = path.resolve(__dirname, '../static/dist')
+const host = 'localhost'
+const port = process.env.NODE_ENV || 3001
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
-const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
-const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
+const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin')
+const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./isomorphic-tools'))
 
-let babelrcObject = {};
+let babelrcObject = {}
 
 try {
-  babelrcObject = require('../package.json').babel;
+  babelrcObject = require('../package.json').babel
 } catch (err) {
-  logger.error('==>     ERROR: Error parsing your babel.json.');
-  logger.error(err);
+  logger.error('==>     ERROR: Error parsing your babel.json.')
+  logger.error(err)
 }
 
-let babelrcObjectDevelopment;
+let babelrcObjectDevelopment
 if (babelrcObject.env) {
-  babelrcObjectDevelopment = babelrcObject.env.development;
+  babelrcObjectDevelopment = babelrcObject.env.development
 } else {
-  babelrcObjectDevelopment = {};
+  babelrcObjectDevelopment = {}
 }
 
 // merge global and dev-only plugins
-let combinedPlugins = babelrcObject.plugins || [];
-combinedPlugins = combinedPlugins.concat(babelrcObjectDevelopment.plugins);
+let combinedPlugins = babelrcObject.plugins || []
+combinedPlugins = combinedPlugins.concat(babelrcObjectDevelopment.plugins)
 
 const babelLoaderQuery = Object.assign({},
-  babelrcObjectDevelopment, babelrcObject, { plugins: combinedPlugins });
-delete babelLoaderQuery.env;
+  babelrcObjectDevelopment, babelrcObject, { plugins: combinedPlugins })
+delete babelLoaderQuery.env
 
 // Since we use babel.json for client and server,
 // and we don't want HMR enabled on the server, we have to add
 // the babel plugin react-transform-hmr manually here.
 
 // make sure react-transform is enabled
-babelLoaderQuery.plugins = babelLoaderQuery.plugins || [];
-let reactTransform = null;
+babelLoaderQuery.plugins = babelLoaderQuery.plugins || []
+let reactTransform = null
 for (let i = 0; i < babelLoaderQuery.plugins.length; i += 1) {
-  const plugin = babelLoaderQuery.plugins[i];
+  const plugin = babelLoaderQuery.plugins[i]
   if (Array.isArray(plugin) && plugin[0] === 'react-transform') {
-    reactTransform = plugin;
+    reactTransform = plugin
   }
 }
 
 if (!reactTransform) {
-  reactTransform = ['react-transform', { transforms: [] }];
-  babelLoaderQuery.plugins.push(reactTransform);
+  reactTransform = ['react-transform', { transforms: [] }]
+  babelLoaderQuery.plugins.push(reactTransform)
 }
 
 if (!reactTransform[1] || !reactTransform[1].transforms) {
-  reactTransform[1] = Object.assign({}, reactTransform[1], { transforms: [] });
+  reactTransform[1] = Object.assign({}, reactTransform[1], { transforms: [] })
 }
 
 // make sure react-transform-hmr is enabled
@@ -64,7 +64,7 @@ reactTransform[1].transforms.push({
   transform: 'react-transform-hmr',
   imports: ['react'],
   locals: ['module'],
-});
+})
 
 export default {
   devtool: 'inline-source-map',
@@ -116,4 +116,4 @@ export default {
     }),
     webpackIsomorphicToolsPlugin.development(),
   ],
-};
+}

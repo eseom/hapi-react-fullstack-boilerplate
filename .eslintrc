@@ -36,14 +36,16 @@ rules:
         1
   no-console: 1
   no-alert: 1
-  semi: 1
+  semi:
+    - 1
+    - 'never'
   no-var: 1
   prefer-const: 1
   object-curly-spacing: 1
   no-shadow: 1
   arrow-parens: 1
   comma-spacing: 1
-  import/prefer-default-export: 1
+  import/prefer-default-export: 0
   curly: 1
   space-before-function-paren: 1
   no-unused-vars: 1

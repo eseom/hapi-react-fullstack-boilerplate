@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import Helmet from 'react-helmet';
-import { Header, Container, Message } from 'semantic-ui-react';
+import React, { Component, PropTypes } from 'react'
+import { Link } from 'react-router'
+import Helmet from 'react-helmet'
+import { Header, Container, Message } from 'semantic-ui-react'
 
 export default class NotFound extends Component {
   static propTypes = {
@@ -20,6 +20,6 @@ export default class NotFound extends Component {
         />
         <Link to="/">back to the main</Link>
       </Container>
-    );
+    )
   }
 }

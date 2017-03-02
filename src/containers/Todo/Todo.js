@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-import { Message } from 'semantic-ui-react';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import Helmet from 'react-helmet'
+import { Message } from 'semantic-ui-react'
 
 @connect(() => ({}), {})
 export default class Form extends Component {
@@ -20,6 +20,6 @@ export default class Form extends Component {
           content="TODO: todo list"
         />
       </div>
-    );
+    )
   }
 }

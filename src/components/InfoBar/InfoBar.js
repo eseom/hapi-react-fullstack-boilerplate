@@ -1,14 +1,14 @@
-import React, { PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { Icon, Button } from 'semantic-ui-react';
+import React, { PropTypes } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { Icon, Button } from 'semantic-ui-react'
 
-import { load } from '../../redux/modules/info';
+import { load } from '../../redux/modules/info'
 
-const styles = require('./InfoBar.scss');
+const styles = require('./InfoBar.scss')
 
 const InfoBar = (props) => {
-  const { info, load } = props; // eslint-disable-line no-shadow
+  const { info, load } = props // eslint-disable-line no-shadow
   return (
     <div className={styles.infoBar}>
       <Button
@@ -23,16 +23,16 @@ const InfoBar = (props) => {
       {' '}
       <strong>{info ? info.message : 'no info!'}</strong>
       {' '}
-      <span className={styles.time}>{info && `at ${new Date(info.time).toLocaleString()}`}</span>
+      <span className={styles.time}>{info && `at ${new Date(info.time)}`}</span>
     </div>
-  );
-};
+  )
+}
 
 InfoBar.propTypes = {
   info: PropTypes.object,
   load: PropTypes.func.isRequired,
-};
+}
 
 export default connect(
   store => ({ info: store.info.data }),
-  dispatch => bindActionCreators({ load }, dispatch))(InfoBar);
+  dispatch => bindActionCreators({ load }, dispatch))(InfoBar)

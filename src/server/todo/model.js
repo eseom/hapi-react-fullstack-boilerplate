@@ -1,7 +1,7 @@
 // @flow
 
 export default (sequelize: Object, DataTypes: Object) => {
-  const { INTEGER, STRING, DATE } = DataTypes;
+  const { INTEGER, STRING, DATE } = DataTypes
   const Todo = sequelize.define('todos', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true, scopes: ['public'] },
     title: STRING,
@@ -20,13 +20,13 @@ export default (sequelize: Object, DataTypes: Object) => {
           foreignKey: {
             allowNull: false,
           },
-        });
+        })
       },
     },
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-  });
+  })
   return {
     Todo,
-  };
-};
+  }
+}

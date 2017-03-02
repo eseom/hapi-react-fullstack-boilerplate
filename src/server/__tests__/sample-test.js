@@ -1,7 +1,7 @@
-import { expect } from 'chai';
+import { expect } from 'chai'
 
 describe('test', () => {
   it('sample test', () => {
-    expect(1).to.equal(1);
-  });
-});
+    expect(1).to.equal(1)
+  })
+})

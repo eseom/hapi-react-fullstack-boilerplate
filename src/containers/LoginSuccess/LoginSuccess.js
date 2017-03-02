@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Icon, Header, Button } from 'semantic-ui-react';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Icon, Header, Button } from 'semantic-ui-react'
 
-import * as authActions from '../../redux/modules/auth';
+import * as authActions from '../../redux/modules/auth'
 
 @connect(
   state => ({ user: state.auth.user && state.auth.user.username ? state.auth.user : null }),
@@ -14,9 +14,9 @@ export default class LoginSuccess extends Component {
   }
 
   render() {
-    const { user, logout } = this.props;
+    const { user, logout } = this.props
     if (!user) {
-      return null;
+      return null
     }
     return (
       <div>
@@ -38,6 +38,6 @@ export default class LoginSuccess extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }

@@ -1,41 +1,41 @@
 // @flow
 
-import Hapi from 'hapi';
-import fs from 'fs';
-import joi from 'joi';
-import boom from 'boom';
-import Inert from 'inert';
-import Vision from 'vision';
-import Path from 'path';
-import SocketIo from 'socket.io';
-import Sequelize from 'sequelize';
-import logger from '../logger';
-import settings from './settings';
+import Hapi from 'hapi'
+import fs from 'fs'
+import joi from 'joi'
+import boom from 'boom'
+import Inert from 'inert'
+import Vision from 'vision'
+import Path from 'path'
+import SocketIo from 'socket.io'
+import Sequelize from 'sequelize'
+import logger from '../logger'
+import settings from './settings'
 
-const handlers = [];
-const models = {};
-const commands = {};
-const command = {};
+const handlers = []
+const models = {}
+const commands = {}
+const command = {}
 
 command.route = (mod: string, identifier: string, callback: () => {}) => {
-  if (typeof commands[mod] === 'undefined') commands[mod] = {};
-  commands[mod][identifier] = callback;
-};
+  if (typeof commands[mod] === 'undefined') commands[mod] = {}
+  commands[mod][identifier] = callback
+}
 
 command.execute = (mod: string, identifier: string) => {
-  commands[mod][identifier]();
-};
+  commands[mod][identifier]()
+}
 
 // prepare db connection
-const dbconfig = settings.database[process.env.NODE_ENV];
-let sequelizeWithOption;
+const dbconfig = settings.database[process.env.NODE_ENV]
+let sequelizeWithOption
 
 if (dbconfig.uri) {
   sequelizeWithOption = new Sequelize(dbconfig.uri, {
     dialect: dbconfig.dialect,
     protocol: dbconfig.protocol,
     dialectOptions: dbconfig.dialectOptions,
-  });
+  })
 } else {
   sequelizeWithOption = new Sequelize(
     dbconfig.database, dbconfig.username,
@@ -43,62 +43,62 @@ if (dbconfig.uri) {
       storage: dbconfig.storage,
       dialect: dbconfig.dialect,
     },
-  );
+  )
 }
 
-const apps = [...settings.apps, 'core'];
+const apps = [...settings.apps, 'core']
 const modules = {
   items: [],
   push: (item: string) => {
-    modules.items.push(item);
+    modules.items.push(item)
   },
   install: () => {
-    modules.items.forEach(it => require(it)); // eslint-disable-line import/no-dynamic-require
+    modules.items.forEach(it => require(it)) // eslint-disable-line import/no-dynamic-require
   },
-};
+}
 
 apps.forEach((app) => {
   ['model', 'view', 'api', 'command'].forEach((mod) => {
     // TODO load command separately
-    const file = `../${app}/${mod}`;
+    const file = `../${app}/${mod}`
     try {
-      fs.statSync(`${__dirname}/${file}.js`);
+      fs.statSync(`${__dirname}/${file}.js`)
     } catch (e) {
-      return;
+      return
     }
     try {
       if (mod === 'model') {
-        const importedModels = sequelizeWithOption.import(file);
+        const importedModels = sequelizeWithOption.import(file)
         Object.keys(importedModels).forEach((it) => {
-          models[it] = importedModels[it];
-        });
+          models[it] = importedModels[it]
+        })
       } else {
-        modules.push(Path.resolve(`${__dirname}/../${app}/${mod}`));
+        modules.push(Path.resolve(`${__dirname}/../${app}/${mod}`))
       }
-    } catch (e) { logger.error(e); }
-  });
-});
+    } catch (e) { logger.error(e) }
+  })
+})
 
 Object.keys(models).forEach((modelName) => {
-  if ('associate' in models[modelName]) models[modelName].associate(models);
-});
+  if ('associate' in models[modelName]) models[modelName].associate(models)
+})
 
 const getServer = async () => {
-  let port;
+  let port
 
   if (process.env.PORT) {
-    port = process.env.PORT;
+    port = process.env.PORT
   } else if (process.env.NODE_ENV !== 'production') {
-    port = 3000;
+    port = 3000
   } else {
-    port = 8080;
+    port = 8080
   }
 
-  const server = new Hapi.Server();
+  const server = new Hapi.Server()
 
   server.connection({
     port,
-  });
+  })
 
   try {
     await (new Promise((resolve, reject) => {
@@ -128,49 +128,49 @@ const getServer = async () => {
           },
         },
       ], (err) => {
-        if (err) reject(err);
-        resolve(true);
-      });
-    }));
+        if (err) reject(err)
+        resolve(true)
+      })
+    }))
   } catch (e) {
-    logger.error(e, e.stack);
+    logger.error(e, e.stack)
   }
 
   /* socket io */
 
-  const io = new SocketIo(server.connections[0].listener, { path: '/ws' });
-  const bufferSize = 100;
-  const messageBuffer = new Array(bufferSize);
-  let messageIndex = 0;
+  const io = new SocketIo(server.connections[0].listener, { path: '/ws' })
+  const bufferSize = 100
+  const messageBuffer = new Array(bufferSize)
+  let messageIndex = 0
 
   io.on('connection', (socket) => {
-    socket.emit('news', { msg: '\'Hello World!\' from server' });
+    socket.emit('news', { msg: '\'Hello World!\' from server' })
 
     socket.on('history', () => {
       for (let index = 0; index < bufferSize; index += 1) {
-        const msgNo = (messageIndex + index) % bufferSize;
-        const msg = messageBuffer[msgNo];
+        const msgNo = (messageIndex + index) % bufferSize
+        const msg = messageBuffer[msgNo]
         if (msg) {
-          socket.emit('msg', msg);
+          socket.emit('msg', msg)
         }
       }
-    });
+    })
 
     socket.on('msg', (data) => {
-      data.id = messageIndex; // eslint-disable-line no-param-reassign
-      messageBuffer[messageIndex % bufferSize] = data;
-      messageIndex += 1;
-      io.emit('msg', data);
-    });
-  });
+      data.id = messageIndex // eslint-disable-line no-param-reassign
+      messageBuffer[messageIndex % bufferSize] = data
+      messageIndex += 1
+      io.emit('msg', data)
+    })
+  })
 
   /* end socket io */
 
-  modules.install();
-  handlers.forEach(handler => server.route(handler));
+  modules.install()
+  handlers.forEach(handler => server.route(handler))
 
-  return server;
-};
+  return server
+}
 
 const get = (
   path: string,
@@ -182,8 +182,8 @@ const get = (
     method: 'GET',
     handler,
     config,
-  });
-};
+  })
+}
 
 const post = (
   path: string,
@@ -195,8 +195,8 @@ const post = (
     method: 'POST',
     handler,
     config,
-  });
-};
+  })
+}
 
 const put = (
   path: string,
@@ -208,8 +208,8 @@ const put = (
     method: 'PUT',
     handler,
     config,
-  });
-};
+  })
+}
 
 const del = (
   path: string,
@@ -221,8 +221,8 @@ const del = (
     method: 'DELETE',
     handler,
     config,
-  });
-};
+  })
+}
 
 const any = (
   path: string,
@@ -234,8 +234,8 @@ const any = (
     method: '*',
     handler,
     config,
-  });
-};
+  })
+}
 
 const route = {
   get,
@@ -249,40 +249,40 @@ const route = {
       handler: (request: Request, reply: () => {}) => any,
       config: Object,
     ) => {
-      get(prefix + path, handler, config);
+      get(prefix + path, handler, config)
     },
     post: (
       path: string,
       handler: (request: Request, reply: () => {}) => any,
       config: Object,
     ) => {
-      post(prefix + path, handler, config);
+      post(prefix + path, handler, config)
     },
     put: (
       path: string,
       handler: (request: Request, reply: () => {}) => any,
       config: Object,
     ) => {
-      put(prefix + path, handler, config);
+      put(prefix + path, handler, config)
     },
     del: (
       path: string,
       handler: (request: Request, reply: () => {}) => any,
       config: Object,
     ) => {
-      del(prefix + path, handler, config);
+      del(prefix + path, handler, config)
     },
     any: (
       path: string,
       handler: (request: Request, reply: () => {}) => any,
       config: Object,
     ) => {
-      any(prefix + path, handler, config);
+      any(prefix + path, handler, config)
     },
   }),
-};
+}
 
-const sequelize = sequelizeWithOption;
+const sequelize = sequelizeWithOption
 
 export {
   modules,
@@ -294,4 +294,4 @@ export {
   joi,
   boom,
   getServer,
-};
+}

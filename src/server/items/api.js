@@ -1,16 +1,16 @@
-import Boom from 'boom';
-import { route } from '../core';
-import getItems from './getter';
+import Boom from 'boom'
+import { route } from '../core'
+import getItems from './getter'
 
-const nestedRoute = route.nested('/api');
+const nestedRoute = route.nested('/api')
 
 nestedRoute.get('/items', async (request, reply) => {
-  const items = await getItems();
+  const items = await getItems()
   if (items) {
-    reply(items);
+    reply(items)
   } else {
-    reply(Boom.serverUnavailable('Widget load fails 33% of the time. You were unlucky.', {}));
+    reply(Boom.serverUnavailable('Widget load fails 33% of the time. You were unlucky.', {}))
   }
 }, {
   tags: ['api'],
-});
+})

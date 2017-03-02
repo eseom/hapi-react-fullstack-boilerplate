@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { List, Header, Button, Input } from 'semantic-ui-react';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { List, Header, Button, Input } from 'semantic-ui-react'
 
 @connect(
   state => ({ user: state.auth.user }),
@@ -9,50 +9,50 @@ export default class Chat extends Component {
 
   static propTypes = {
     user: PropTypes.object,
-  };
+  }
 
   state = {
     message: '',
     messages: [],
-  };
+  }
 
   componentDidMount() {
     if (socket) {
-      socket.on('msg', this.onMessageReceived);
+      socket.on('msg', this.onMessageReceived)
       setTimeout(() => {
-        socket.emit('history', { offset: 0, length: 100 });
-      }, 100);
+        socket.emit('history', { offset: 0, length: 100 })
+      }, 100)
     }
   }
 
   componentWillUnmount() {
     if (socket) {
-      socket.removeListener('msg', this.onMessageReceived);
+      socket.removeListener('msg', this.onMessageReceived)
     }
   }
 
   onMessageReceived = (data) => {
-    const messages = this.state.messages;
-    messages.push(data);
-    this.setState({ messages });
+    const messages = this.state.messages
+    messages.push(data)
+    this.setState({ messages })
   }
 
   handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const msg = this.state.message;
+    const msg = this.state.message
 
-    this.setState({ message: '' });
+    this.setState({ message: '' })
 
     socket.emit('msg', {
       from: this.props.user.username,
       text: msg,
-    });
+    })
   }
 
   render() {
-    const style = require('./Chat.scss');
-    const { user } = this.props;
+    const style = require('./Chat.scss')
+    const { user } = this.props
 
     return (
       <div className={`${style.chat} container`}>
@@ -71,7 +71,7 @@ export default class Chat extends Component {
               placeholder="Enter your message"
               value={this.state.message}
               onChange={(event) => {
-                this.setState({ message: event.target.value });
+                this.setState({ message: event.target.value })
               }}
             />
             <Button className="btn" primary onClick={this.handleSubmit}>Send</Button>
@@ -79,6 +79,6 @@ export default class Chat extends Component {
         </div>
         }
       </div>
-    );
+    )
   }
 }

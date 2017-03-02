@@ -1,9 +1,9 @@
 /* eslint global-require: "off" */
 
-import React, { Component } from 'react';
-import Helmet from 'react-helmet';
-import { Header, Message, Button } from 'semantic-ui-react';
-import { MiniInfoBar } from '../../components';
+import React, { Component } from 'react'
+import Helmet from 'react-helmet'
+import { Header, Message, Button } from 'semantic-ui-react'
+import { MiniInfoBar } from '../../components'
 
 export default class About extends Component {
 
@@ -11,11 +11,11 @@ export default class About extends Component {
     showKitten: false,
   }
 
-  handleToggleKitten = () => this.setState({ showKitten: !this.state.showKitten });
+  handleToggleKitten = () => this.setState({ showKitten: !this.state.showKitten })
 
   render() {
-    const { showKitten } = this.state;
-    const kitten = require('./kitten.jpg');
+    const { showKitten } = this.state
+    const kitten = require('./kitten.jpg')
     return (
       <div className="container">
         <h1>About Us</h1>
@@ -64,6 +64,6 @@ export default class About extends Component {
 
         {showKitten && <div><img src={kitten} alt="kitten" /></div>}
       </div>
-    );
+    )
   }
 }
