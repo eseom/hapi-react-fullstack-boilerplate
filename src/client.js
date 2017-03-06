@@ -1,22 +1,18 @@
-/* eslint no-console: "off" */
-
-import 'babel-polyfill'
 import React from 'react'
-import ReactDOM from 'react-dom'
 import io from 'socket.io-client'
+import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, browserHistory } from 'react-router'
+import { ReduxAsyncConnect } from 'redux-connect'
 import { syncHistoryWithStore } from 'react-router-redux'
-import { ReduxAsyncConnect } from 'redux-async-connect'
 import useScroll from 'scroll-behavior/lib/useStandardScroll'
 
-import { configureStore } from './redux/configureStore'
-import ApiClient from './helpers/ApiClient'
-import getRoutes from './routes'
+import { ApiClient } from './helpers/ApiClient'
+import { getRoutes } from './routes'
+import { configureStore } from './redux/store'
 
 const client = new ApiClient()
 const bHistory = useScroll(() => browserHistory)()
-const dest = document.getElementById('content')
 const store = configureStore(bHistory, client, window.processedStore)
 const history = syncHistoryWithStore(bHistory, store)
 
@@ -37,39 +33,34 @@ function initSocket() {
   return socket
 }
 
-global.socket = initSocket()
+// global.socket = initSocket()
 
-const RootComponent = () => (
-  <Provider store={store} key="provider">
-    <Router
-      render={props =>
-        <ReduxAsyncConnect {...props} helpers={{ client }} filter={item => !item.deferred} />
-      }
-      history={history}
-    >
-      {getRoutes(store)}
-    </Router>
-  </Provider>
+const Root = () => (
+  <div>
+    <Provider store={store}>
+      <Router
+        render={props => <ReduxAsyncConnect {...props} helpers={{ client }} />}
+        filter={item => !item.deferred}
+        history={history}
+        key={Math.random()}
+      >
+        {getRoutes()}
+      </Router>
+    </Provider>
+  </div>
 )
 
-ReactDOM.render(
-  <RootComponent />,
-  dest,
-)
-
-if (DEVELOPMENT && module.hot) {
-  module.hot.accept(() => {
-    ReactDOM.render(
-      <RootComponent />,
-      dest,
-    )
-  })
+const bootstrap = (Component) => {
+  render(
+    <Component />,
+    document.getElementById('root'),
+  )
 }
 
-if (process.env.NODE_ENV !== 'production') {
-  window.React = React // enable debugger
+bootstrap(Root)
 
-  if (!dest || !dest.firstChild || !dest.firstChild.attributes || !dest.firstChild.attributes['data-react-checksum']) {
-    console.error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.')
-  }
+if (module.hot) {
+  module.hot.accept('./containers/App/App', () => {
+    bootstrap(Root)
+  })
 }

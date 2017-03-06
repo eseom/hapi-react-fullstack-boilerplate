@@ -1,4 +1,2 @@
-#!/usr/bin/env node
-
-require('../babel-require')
-require('../webpack/packager')
+require('../tools/bootstrap')
+require('../tools/packager.js')

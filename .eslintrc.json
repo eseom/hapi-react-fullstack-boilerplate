@@ -1,0 +1,28 @@
+{
+  "extends": "airbnb",
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "semi": [1, "never"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "global-require": 0,
+    "import/prefer-default-export": 0,
+    "react/prefer-stateless-function": 0,
+    "no-unused-vars": 1
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "globals": {
+    "DEVELOPMENT": true,
+    "CLIENT": true,
+    "SERVER": true,
+    "DISABLE_SSR": true,
+    "webpackIsomorphicTools": true
+  }
+}
