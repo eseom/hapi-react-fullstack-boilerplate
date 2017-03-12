@@ -27,7 +27,6 @@ react full web stack with rendering server, hapi echosystem
 * session based authentication
 * [Socket.io](https://github.com/socketio/socket.io)
 * sass loader, node sass
-* [SemanticUI](https://github.com/Semantic-Org/Semantic-UI)
 
 ## Extra features
 * Django style Hapi module structure
@@ -37,18 +36,24 @@ yarn exec items get # see src/server/items/command.js
 ```
 
 ## Usage
-**Clone this repository**
+**development**
 
     git clone https://github.com/eseom/hapi-react-fullstack-boilerplate.git
     yarn
+    vim src/server/core/settings.js (edit database connection config)
     yarn db:upgrade # for db migration
     yarn dev
 
-**Testing**
+**testing**
 
     yarn test
     yarn test:node
     yarn test:node:watch
+
+**production**
+
+    yarn build
+    [PORT=4000 ]DATABASE_URL=postgres://<username>@<hostname>:<port>/<dbname> yarn start
 
 **API Interface**
 
