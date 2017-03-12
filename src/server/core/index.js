@@ -30,8 +30,8 @@ command.execute = (mod: string, identifier: string) => {
 const dbconfig = settings.database[process.env.NODE_ENV]
 let sequelizeWithOption
 
-if (dbconfig.uri) {
-  sequelizeWithOption = new Sequelize(dbconfig.uri, {
+if (dbconfig.url) {
+  sequelizeWithOption = new Sequelize(dbconfig.url, {
     dialect: dbconfig.dialect,
     protocol: dbconfig.protocol,
     dialectOptions: dbconfig.dialectOptions,
