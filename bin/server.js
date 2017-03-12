@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* eslint import/no-extraneous-dependencies: "off" */
 
-require('../babel-require')
+require('../tools/babel-require')
 const path = require('path')
 
 const rootDir = path.resolve(__dirname, '..')
@@ -22,7 +22,7 @@ if (DEVELOPMENT) {
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools')
-global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack/isomorphic-tools'))
+global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../tools/isomorphic-tools'))
   .server(rootDir, () => {
     require('../src/server')
   })

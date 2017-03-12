@@ -17,6 +17,8 @@ const assetsPath = path.resolve(projectRootPath, './static/dist')
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin')
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./isomorphic-tools'))
 
+const extractText = new ExtractTextPlugin({ filename: '[name]-[chunkhash].css', disable: false, allChunks: true })
+
 module.exports = {
   devtool: 'source-map',
   context: path.resolve(__dirname, '..'),
@@ -37,13 +39,40 @@ module.exports = {
     loaders: [
       { test: /\.jsx?$/, exclude: /node_modules/, loaders: [strip.loader('debug'), 'babel-loader'] },
       { test: /\.json$/, loader: 'json-loader' },
-      { test: /\.less$/, loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMap=true&sourceMapContents=true' }) },
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true' }) },
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff' },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream' },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
+      {
+        test: /Html.scss$/,
+        use: extractText.extract([
+          {
+            loader: 'css-loader',
+            options: {
+              modules: false,
+            },
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ]),
+      },
+      {
+        test: /\.scss$/,
+        exclude: /Html\.scss$/,
+        use: extractText.extract([
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+            },
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ]),
+      },
+      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader?limit=10000&mimetype=application/font-woff' },
+      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader?limit=10000&mimetype=application/font-woff' },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader?limit=10000&mimetype=application/octet-stream' },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, use: 'file-loader' },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, use: 'url-loader?limit=10000&mimetype=image/svg+xml' },
       { test: webpackIsomorphicToolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' },
     ],
   },
@@ -58,7 +87,7 @@ module.exports = {
     new CleanPlugin([assetsPath], { root: projectRootPath }),
 
     // css files from the extract-text-plugin loader
-    new ExtractTextPlugin({ filename: '[name]-[chunkhash].css', disable: false, allChunks: true }),
+    extractText,
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',
@@ -72,7 +101,6 @@ module.exports = {
     new webpack.IgnorePlugin(/\.\/dev/, /\/config$/),
 
     // optimizations
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {

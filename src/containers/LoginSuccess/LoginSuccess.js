@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Icon, Header, Button } from 'semantic-ui-react'
 
 import * as authActions from '../../redux/modules/auth'
 
@@ -19,22 +18,22 @@ export default class LoginSuccess extends Component {
       return null
     }
     return (
-      <div>
-        <Header as="h1">Login Success</Header>
+      <div className="container-fluid">
+        <h3>Login Success</h3>
         <div>
-          <p>
+          <div className="alert alert-info">
             Hi, {user.username}. You have just successfully logged in,
             and were forwarded here
             by <code>componentWillReceiveProps()</code> in <code>App.js</code>,
             which is listening to
             the auth reducer via redux <code>@connect</code>. How exciting!
-          </p>
+          </div>
           <p>
             The same function will forward you to <code>/</code> should
             you chose to log out. The choice is yours...
           </p>
           <div>
-            <Button secondary size="mini" onClick={logout}><Icon name="sign out" />{' '}Log Out</Button>
+            <button className="btn btn-sm btn-default" onClick={logout}><i className="fa fa-signout" />{' '}Log Out</button>
           </div>
         </div>
       </div>

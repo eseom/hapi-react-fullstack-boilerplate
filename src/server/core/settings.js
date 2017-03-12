@@ -15,7 +15,7 @@ export default {
       dialect: 'sqlite',
     },
     production: {
-      uri: process.env.DATABASE_URL,
+      url: process.env.DATABASE_URL,
       dialect: 'postgres',
       protocol: 'postgres',
       dialectOptions: {

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { asyncConnect } from 'redux-async-connect'
+import { asyncConnect } from 'redux-connect'
 import { Message, Button, Icon, Table } from 'semantic-ui-react'
 
 import * as itemsActions from '../../redux/modules/items'
@@ -8,7 +8,6 @@ import * as itemsActions from '../../redux/modules/items'
 const { isLoaded, load: loadItems } = itemsActions
 
 @asyncConnect([{
-  deferred: true,
   promise: ({ store: { dispatch, getState } }) => {
     if (!isLoaded(getState())) {
       return dispatch(loadItems())
@@ -35,50 +34,48 @@ export default class extends Component {
   renderTable = (error, items) => {
     if (!error && !items) {
       return (
-        <Message
-          info
-          content="loading..."
-        />
+        <div className="alert alert-info">
+          loading...
+        </div>
       )
     }
     if (error) {
       return (
-        <Message
-          error
-          content="failed to load items."
-        />
+        <div className="alert alert-danger">
+          failed to load items.
+        </div>
       )
     }
     return (
-      <Table celled definition compact>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell />
-            <Table.HeaderCell>Package</Table.HeaderCell>
-            <Table.HeaderCell>Version</Table.HeaderCell>
-            <Table.HeaderCell>Note</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th />
+            <th>Package</th>
+            <th>Version</th>
+            <th>Note</th>
+          </tr>
+        </thead>
 
-        <Table.Body>
-          {items.map((it, key) => (
-            <Table.Row key={key}>
-              <Table.Cell>{it.id}</Table.Cell>
-              <Table.Cell><a href={it.name.link}>{it.name.text}</a></Table.Cell>
-              <Table.Cell><a href={it.version.link}>{it.version.text}</a></Table.Cell>
-              <Table.Cell>{it.note}</Table.Cell>
-            </Table.Row>
+        <tbody>
+          {items.map(it => (
+            <tr key={it.id}>
+              <td>{it.id}</td>
+              <td><a href={it.name.link}>{it.name.text}</a></td>
+              <td><a href={it.version.link}>{it.version.text}</a></td>
+              <td>{it.note}</td>
+            </tr>
           ))}
-        </Table.Body>
+        </tbody>
 
-        <Table.Footer>
-          <Table.Row>
-            <Table.HeaderCell colSpan="4">
+        <tfoot>
+          <tr>
+            <td colSpan="4">
               footer
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Footer>
-      </Table>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
     )
   }
 
@@ -89,22 +86,26 @@ export default class extends Component {
       refreshClassName = 'asterisk'
     }
     return (
-      <div>
-        <h1>Items</h1>
-        <Message
-          info
-          content="A table may be formatted to emphasize a first column that defines a row content."
-        />
-        {loading ?
-          <Button size="mini" secondary basic loading>Loading</Button>
-          :
-          <Button size="mini" secondary basic onClick={load}>
-            <Icon name={refreshClassName} />
-            {' '}
-            Reload
-          </Button>
-        }
-        <h3>Packages Tracked by DistroWatch</h3>
+      <div className="container-fluid">
+        <h3>Items</h3>
+
+        <div className="alert alert-info">
+          A table may be formatted to emphasize a first column that defines a row content.
+        </div>
+
+        <p>
+          {loading ?
+            <button className="btn btn-sm btn-default">Loading</button>
+            :
+            <button className="btn btn-sm btn-primary" onClick={load}>
+              <i className={refreshClassName} />
+              {' '}
+              Reload
+            </button>
+          }
+        </p>
+
+        <h4>Packages Tracked by DistroWatch</h4>
         <p>https://distrowatch.com/packages.php</p>
 
         {this.renderTable(error, items)}

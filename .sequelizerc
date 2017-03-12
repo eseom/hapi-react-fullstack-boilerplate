@@ -1,4 +1,4 @@
-require('./babel-require');
+require('./tools/babel-require');
 
 const path = require('path');
 

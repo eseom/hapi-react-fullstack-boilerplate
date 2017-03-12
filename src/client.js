@@ -1,13 +1,13 @@
+// @flow
 /* eslint no-console: "off" */
 
-import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import io from 'socket.io-client'
 import { Provider } from 'react-redux'
 import { Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
-import { ReduxAsyncConnect } from 'redux-async-connect'
+import { ReduxAsyncConnect } from 'redux-connect'
 import useScroll from 'scroll-behavior/lib/useStandardScroll'
 
 import { configureStore } from './redux/configureStore'
@@ -64,12 +64,4 @@ if (DEVELOPMENT && module.hot) {
       dest,
     )
   })
-}
-
-if (process.env.NODE_ENV !== 'production') {
-  window.React = React // enable debugger
-
-  if (!dest || !dest.firstChild || !dest.firstChild.attributes || !dest.firstChild.attributes['data-react-checksum']) {
-    console.error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.')
-  }
 }

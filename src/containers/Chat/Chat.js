@@ -55,18 +55,18 @@ export default class Chat extends Component {
     const { user } = this.props
 
     return (
-      <div className={`${style.chat} container`}>
-        <Header as="h1">Chat</Header>
+      <div className={`${style.chat} container-fluid`}>
+        <h3>Chat</h3>
 
         {user &&
         <div>
-          <List bulleted>
+          <ul>
             {this.state.messages.map(msg => (
-              <List.Item key={`chat.msg.${msg.id}`}>{msg.from}: {msg.text}</List.Item>
+              <li key={`chat.msg.${msg.id}`}>{msg.from}: {msg.text}</li>
             ))}
-          </List>
+          </ul>
           <form className="login-form" onSubmit={this.handleSubmit}>
-            <Input
+            <input
               type="text"
               placeholder="Enter your message"
               value={this.state.message}
@@ -74,7 +74,7 @@ export default class Chat extends Component {
                 this.setState({ message: event.target.value })
               }}
             />
-            <Button className="btn" primary onClick={this.handleSubmit}>Send</Button>
+            <button className="btn btn-sm btn-primary" onClick={this.handleSubmit}>Send</button>
           </form>
         </div>
         }

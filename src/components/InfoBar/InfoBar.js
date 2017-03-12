@@ -11,19 +11,19 @@ const InfoBar = (props) => {
   const { info, load } = props // eslint-disable-line no-shadow
   return (
     <div className={styles.infoBar}>
-      <Button
-        compact basic size="mini" color="violet"
-        className={styles.button} onClick={load}
-      >
-        <Icon name="refresh" />
-        Reload from server
-      </Button>
-      {' '}
+      <hr />
       This is an info bar
       {' '}
       <strong>{info ? info.message : 'no info!'}</strong>
       {' '}
       <span className={styles.time}>{info && `at ${new Date(info.time)}`}</span>
+      <br />
+      <button
+        className="btn btn-sm btn-info" onClick={load}
+      >
+        <i className="fa fa-refresh" />
+        Reload from server
+      </button>
     </div>
   )
 }

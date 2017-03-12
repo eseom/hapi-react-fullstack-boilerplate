@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/server'
 import PrettyError from 'pretty-error'
 import { match } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
-import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect'
+import { ReduxAsyncConnect, loadOnServer } from 'redux-connect'
 import createHistory from 'react-router/lib/createMemoryHistory'
 import { Provider } from 'react-redux'
 import fs from 'fs'
@@ -89,8 +89,6 @@ const start = async () => {
   })
 }
 
-try {
-  start()
-} catch (e) {
+start().catch((e) => {
   logger.error(e, e.stack)
-}
+})

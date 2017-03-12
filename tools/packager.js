@@ -4,7 +4,7 @@ import webpack from 'webpack'
 import Hapi from 'hapi'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-import webpackConfig from './development'
+import webpackConfig from './webpack.development'
 import logger from '../src/server/logger'
 
 const compiler = webpack(webpackConfig)

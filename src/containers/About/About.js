@@ -17,49 +17,44 @@ export default class About extends Component {
     const { showKitten } = this.state
     const kitten = require('./kitten.jpg')
     return (
-      <div className="container">
-        <h1>About Us</h1>
+      <div className="container-fluid">
         <Helmet title="About Us" />
 
-        <Message
-          info
-          icon
-        >
-          <span>
-            This project was created by Eunseok Eom
-            (<a href="https://github.com/eseom" rel="noopener noreferrer" target="_blank">@eseom</a>),
-            based on
-            (<a href="https://twitter.com/erikras" rel="noopener noreferrer" target="_blank">@erikras</a>)&apos;s project,
-            react-redux-universal-hot-example.
-          </span>
-        </Message>
+        <h3>About us</h3>
 
-        <Header as="h3">
+        <p>
+          This project was created by Eunseok Eom
+          (<a href="https://github.com/eseom" rel="noopener noreferrer" target="_blank">@eseom</a>),
+          based on
+          (<a href="https://twitter.com/erikras" rel="noopener noreferrer" target="_blank">@erikras</a>)&apos;s project,
+          react-redux-universal-hot-example.
+        </p>
+
+        <h4>
           Mini Bar <span style={{ color: '#aaa' }}>(not that kind)</span>
-        </Header>
+        </h4>
 
-        <p>Hey! You found the mini info bar! The following component is
+        <p>
+          Hey! You found the mini info bar! The following component is
           display-only. Note that it shows the same
           time as the info bar.
         </p>
 
-        <MiniInfoBar />
+        <p>
+          {/* <MiniInfoBar /> */}
+        </p>
 
-        <h3>Images</h3>
+        <h4>Images</h4>
 
         <p>
           Psst! Would you like to see a kitten?
-          <Button
-            size="mini"
-            basic
-            compact
-            color="pink"
+          <button
             style={{ marginLeft: 10 }}
-            className={`btn btn-${(showKitten ? 'danger' : 'success')}`}
+            className={`btn btn-sm btn-${(showKitten ? 'danger' : 'success')}`}
             onClick={this.handleToggleKitten}
           >
             {showKitten ? 'No! Take it away!' : 'Yes! Please!'}
-          </Button>
+          </button>
         </p>
 
         {showKitten && <div><img src={kitten} alt="kitten" /></div>}

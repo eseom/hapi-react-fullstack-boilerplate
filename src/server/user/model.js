@@ -7,7 +7,7 @@ const hasSecurePassword = (user, options, callback) => {
   if (user.password !== user.passwordConfirmation) {
     throw new Error("Password confirmation doesn't match Password")
   }
-  bcrypt.hash(user.get('password'), 10, (err, hash) => {
+  bcrypt.hash(user.get('password'), null, null, (err, hash) => {
     if (err) return callback(err)
     user.set('passwordDigest', hash)
     return callback(null, options)

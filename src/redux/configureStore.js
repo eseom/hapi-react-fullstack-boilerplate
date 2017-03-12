@@ -20,16 +20,12 @@ export const configureStore = (history, client, data) => {
     finalCreateStore = applyMiddleware(...middleware)(_createStore)
   }
 
-  const reducers = require('./reducers')
-  // remove pagination
-  // if (data) {
-  //   data.pagination = Immutable.fromJS(data.pagination)
-  // }
+  const reducers = require('./reducers').default
   const store = finalCreateStore(reducers, data)
 
   if (DEVELOPMENT && module.hot) {
     module.hot.accept('./reducers', () => {
-      store.replaceReducer(require('./reducers'))
+      store.replaceReducer(require('./reducers').default)
     })
   }
 

@@ -84,6 +84,7 @@ Object.keys(models).forEach((modelName) => {
 })
 
 const getServer = async () => {
+  const host = 'localhost'
   let port
 
   if (process.env.PORT) {
@@ -97,6 +98,7 @@ const getServer = async () => {
   const server = new Hapi.Server()
 
   server.connection({
+    host,
     port,
   })
 
@@ -117,6 +119,9 @@ const getServer = async () => {
         },
         {
           register: require('hapi-es7-async-handler'),
+          options: {
+            server,
+          },
         },
         {
           register: require('hapi-swagger'),
@@ -166,8 +171,13 @@ const getServer = async () => {
 
   /* end socket io */
 
-  modules.install()
-  handlers.forEach(handler => server.route(handler))
+  try {
+    modules.install()
+    handlers.forEach(handler => server.route(handler))
+  } catch (e) {
+    logger.error('module install error', e)
+  }
+
 
   return server
 }
