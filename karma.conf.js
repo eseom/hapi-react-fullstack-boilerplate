@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var babelrcObject = require('./package.json').babel
 
 module.exports = function (config) {
   config.set({
@@ -11,11 +12,11 @@ module.exports = function (config) {
 
     files: [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
-      'tests.webpack.js'
+      './tools/tests-webpack.js'
     ],
 
     preprocessors: {
-      'tests.webpack.js': [ 'webpack', 'sourcemap' ]
+      './tools/tests.webpack.js': [ 'webpack', 'sourcemap' ]
     },
 
     reporters: [ 'mocha' ],
@@ -33,18 +34,49 @@ module.exports = function (config) {
       module: {
         loaders: [
           { test: /\.(jpe?g|png|gif|svg)$/, loader: 'url', query: {limit: 10240} },
-          { test: /\.js$/, exclude: /node_modules/, loaders: ['babel']},
+          { test: /\.js$/, exclude: /node_modules/, use: [{ loader: 'babel-loader', options: babelrcObject }]},
           { test: /\.json$/, loader: 'json-loader' },
-          { test: /\.less$/, loader: 'style!css!less' },
-          { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' }
+          {
+            test: /Html\.scss$/,
+            use: [
+              { loader: 'style-loader' },
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true,
+                  modules: false,
+                },
+              },
+              {
+                loader: 'sass-loader',
+              },
+            ],
+          },
+          {
+            test: /\.scss$/,
+            exclude: /Html\.scss$/,
+            use: [
+              { loader: 'style-loader' },
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true,
+                  modules: true,
+                },
+              },
+              {
+                loader: 'sass-loader',
+              },
+            ],
+          },
         ]
       },
       resolve: {
-        modulesDirectories: [
+        modules: [
           'src',
           'node_modules'
         ],
-        extensions: ['', '.json', '.js']
+        extensions: ['.json', '.js']
       },
       plugins: [
         new webpack.IgnorePlugin(/\.json$/),
@@ -56,10 +88,8 @@ module.exports = function (config) {
         })
       ]
     },
-
     webpackServer: {
       noInfo: true
     }
-
   });
 };
