@@ -84,7 +84,6 @@ Object.keys(models).forEach((modelName) => {
 })
 
 const getServer = async () => {
-  const host = 'localhost'
   let port
 
   if (process.env.PORT) {
@@ -98,7 +97,6 @@ const getServer = async () => {
   const server = new Hapi.Server()
 
   server.connection({
-    host,
     port,
   })
 
