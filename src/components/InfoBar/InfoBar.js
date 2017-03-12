@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Icon, Button } from 'semantic-ui-react'
 
 import { load } from '../../redux/modules/info'
 

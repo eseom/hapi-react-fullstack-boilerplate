@@ -65,7 +65,7 @@ export default class extends Component {
     <div>
       <label htmlFor={input.name}>{input.name}</label>
       <input
-        error={touched && !!error}
+        // error={touched && !!error}
         className="form-control"
         label={
           <label htmlFor="">{label} {touched && ((error && <span>({error})</span>) || (warning && <span>({warning})</span>))}</label> // eslint-disable-line jsx-a11y/label-has-for
@@ -91,7 +91,7 @@ export default class extends Component {
 
         {!user &&
           <form
-            error={loginError && !!loginError.error}
+            // error={loginError && !!loginError.error}
             onSubmit={handleSubmit(this.handleSubmit)}
           >
             <div className="alert alert-success">

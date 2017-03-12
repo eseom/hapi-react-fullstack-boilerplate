@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { increment } from '../../redux/modules/counter'
@@ -10,7 +10,7 @@ import { increment } from '../../redux/modules/counter'
 export default class CounterButton extends Component {
 
   render() {
-    const { count, increment, color, basic } = this.props // eslint-disable-line no-shadow
+    const { count, increment } = this.props // eslint-disable-line no-shadow
     let { className } = this.props
     className += ' btn btn-sm btn-default'
     return (

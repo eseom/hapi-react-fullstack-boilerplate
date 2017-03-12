@@ -10,7 +10,7 @@ import { isLoaded as isAuthLoaded, load as loadAuth, logout } from '../../redux/
 import { InfoBar } from '../../components'
 import config from '../../config'
 import '../../helpers/Html.scss'
-import styles from './App.scss'
+// import styles from './App.scss'
 
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {

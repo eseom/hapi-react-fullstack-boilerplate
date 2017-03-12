@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
-import { Header, Message, Button } from 'semantic-ui-react'
 import { MiniInfoBar } from '../../components'
 
 export default class About extends Component {
@@ -40,9 +39,9 @@ export default class About extends Component {
           time as the info bar.
         </p>
 
-        <p>
-          {/* <MiniInfoBar /> */}
-        </p>
+        <div>
+          <MiniInfoBar />
+        </div>
 
         <h4>Images</h4>
 

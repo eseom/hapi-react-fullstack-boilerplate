@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { asyncConnect } from 'redux-connect'
-import { Message, Button, Icon, Table } from 'semantic-ui-react'
 
 import * as itemsActions from '../../redux/modules/items'
 

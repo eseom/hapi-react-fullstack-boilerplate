@@ -4,11 +4,11 @@ import { connect } from 'react-redux'
 const MainInfoBar = (props) => {
   const { time } = props
   return (
-    <div className="mini-info-bar">
+    <p className="mini-info-bar">
       The info bar was last loaded at
       {' '}
       <span>{time && new Date(time).toString()}</span>
-    </div>
+    </p>
   )
 }
 
