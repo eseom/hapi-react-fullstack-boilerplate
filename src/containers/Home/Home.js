@@ -30,7 +30,9 @@ export default class Home extends Component {
         <Helmet title="Home" />
 
         <h3>{config.app.title}</h3>
-        <p />
+        <p>
+          (list, link, message, redux)
+        </p>
 
         <div className="alert alert-info">
           <h5 className="alert-heading">{config.app.subtitle}</h5>

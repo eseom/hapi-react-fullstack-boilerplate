@@ -88,6 +88,8 @@ export default class extends Component {
       <div className="container-fluid">
         <h3>Items</h3>
 
+        <p>(fetching data asynchronously)</p>
+
         <div className="alert alert-info">
           A table may be formatted to emphasize a first column that defines a row content.
         </div>

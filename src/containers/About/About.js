@@ -22,12 +22,16 @@ export default class About extends Component {
         <h3>About us</h3>
 
         <p>
+          (widgets)
+        </p>
+
+        <div className="alert alert-info">
           This project was created by Eunseok Eom
           (<a href="https://github.com/eseom" rel="noopener noreferrer" target="_blank">@eseom</a>),
           based on
           (<a href="https://twitter.com/erikras" rel="noopener noreferrer" target="_blank">@erikras</a>)&apos;s project,
           react-redux-universal-hot-example.
-        </p>
+        </div>
 
         <h4>
           Mini Bar <span style={{ color: '#aaa' }}>(not that kind)</span>

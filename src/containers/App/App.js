@@ -43,7 +43,7 @@ export default class App extends Component {
   }
 
   static state = {
-    sidebarVisible: false,
+    menuVisible: false,
   }
 
   constructor(props) {
@@ -61,20 +61,18 @@ export default class App extends Component {
       // logout
       this.props.pushState('/')
     }
+    this.setState({
+      menuVisible: false,
+    })
   }
-
-  handleItemClick = (event, { name }) => this.setState({
-    activeItem: name,
-    sidebarVisible: false,
-  })
 
   handleLogout = (event) => {
     event.preventDefault()
     this.props.logout()
   }
 
-  toggleVisibility = () => {
-    this.setState({ sidebarVisible: !this.state.sidebarVisible })
+  toggleMenu = () => {
+    this.setState({ menuVisible: !this.state.menuVisible })
   }
 
   render() {
@@ -85,68 +83,73 @@ export default class App extends Component {
       <div>
         <Helmet {...config.app.head} />
 
-        <div className="container-fluid">
-          <h2><Link to="/"><strong>HRFB &nbsp;<small><em>0.1.0</em></small></strong></Link></h2>
-          <ul>
-            <li>
-              <Link to="/" name="home" className={activeItem === 'home' && 'active'}>
-                Home (list, link, message, redux)
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" name="about" className={activeItem === 'about' && 'active'}>
-                About (widgets)
-              </Link>
-            </li>
-            <li>
-              <Link to="/items" name="items" className={activeItem === 'items' && 'active'}>
-                Items (fetching data asynchronously)
-              </Link>
-            </li>
-            <li>
-              <Link to="/todo" name="todo" className={activeItem === 'todo' && 'active'}>
-                Todo
-              </Link>
-            </li>
-            {user ?
-              <li>
-                <Link to="/chat" name="chat" className={activeItem === 'chat' && 'active'}>
-                  Chat
+        <nav className="navbar navbar-inverse navbar-toggleable-md bg-inverse bg-faded">
+          <button className="navbar-toggler navbar-toggler-right" type="button" onClick={this.toggleMenu}>
+            <span className="navbar-toggler-icon" />
+          </button>
+          <a className="navbar-brand" href="/">HRFB 0.1</a>
+          <div className={!this.state.menuVisible && 'collapse navbar-collapse'}>
+            <ul className="navbar-nav">
+              <li className={`nav-item ${activeItem === 'home' && 'active'}`}>
+                <Link className="nav-link" to="/">
+                  Home
                 </Link>
               </li>
-              :
-              null
-            }
-            <li>
-              <Link to="/no_route_page" name="no_route_page" className={activeItem === 'no_route_page' && 'active'}>
-                Not found (404 page)
-              </Link>
-            </li>
-
-            {user ?
-              <li>
-                <span>Logged as {user.username}</span>{' '}
-                <Link to="/logout" name="logout" onClick={this.handleLogout}>
-                  Logout
+              <li className={`nav-item ${activeItem === 'about' && 'active'}`}>
+                <Link className="nav-link" to="/about">
+                  About
                 </Link>
               </li>
-              :
-              <li>
-                <Link to="/login" name="login" className={activeItem === 'login' && 'active'}>
-                  Login
-                </Link>{' '}
-                <Link to="/join" name="join" className={activeItem === 'join' && 'active'}>
-                  Join
+              <li className={`nav-item ${activeItem === 'items' && 'active'}`}>
+                <Link className="nav-link" to="/items">
+                  Items
                 </Link>
               </li>
-            }
+              <li className={`nav-item ${activeItem === 'todo' && 'active'}`}>
+                <Link className="nav-link" to="/todo">
+                  Todo
+                </Link>
+              </li>
+              {user ?
+                <li className={`nav-item ${activeItem === 'chat' && 'active'}`}>
+                  <Link className="nav-link" to="/chat">
+                    Chat
+                  </Link>
+                </li>
+                :
+                null
+              }
+              <li className={`nav-item ${activeItem === 'no_route_page' && 'active'}`}>
+                <Link className="nav-link" to="/no_route_page">
+                  NotFound
+                </Link>
+              </li>
+              {user ?
+                <li className="nav-item">
+                  {/* <span className="nav-link">Logged as {user.username}</span>{' '} */}
+                  <Link className="nav-link" to="/logout" onClick={this.handleLogout}>
+                    Logout
+                  </Link>
+                </li>
+                :
+                (() => ([
+                  <li className={`nav-item ${activeItem === 'login' && 'active'}`}>
+                    <Link className="nav-link" to="/login">
+                      Login
+                    </Link>{' '}
+                  </li>,
+                  <li className={`nav-item ${activeItem === 'join' && 'active'}`}>
+                    <Link className="nav-link" to="/join">
+                      Join
+                    </Link>
+                  </li>,
+                ]))()
+              }
+            </ul>
+          </div>
+        </nav>
 
-          </ul>
-        </div>
-
-        <div className="container-fluid">
-          <hr />
-        </div>
+        <p />
 
         <div>
           {this.props.children}

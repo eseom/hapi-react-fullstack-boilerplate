@@ -9,7 +9,7 @@ export default class NotFound extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid" style={{ marginTop: 60 }}>
         <Helmet title="404 not found" />
         <h3>404 not found!</h3>
 
