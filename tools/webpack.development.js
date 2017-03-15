@@ -6,7 +6,7 @@ import logger from '../src/server/logger'
 
 const assetsPath = Path.resolve(__dirname, '../static/dist')
 const host = 'localhost'
-const port = process.env.NODE_ENV || 3001
+const port = process.env.PORT || 3001
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin')
