@@ -5,7 +5,7 @@ import { route, models } from '../core'
 const { User } = models
 const nestedRoute = route.nested('/api')
 
-nestedRoute.get('/loadAuth', async (request, reply) => {
+nestedRoute.get('/load-auth', async (request, reply) => {
   reply(request.yar.get('user') || null)
 }, {
   tags: ['api'],

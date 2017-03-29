@@ -3,7 +3,7 @@ import { route } from '../core'
 
 const nestedRoute = route.nested('/api')
 
-nestedRoute.get('/loadInfo', async (request, reply) => {
+nestedRoute.get('/load-info', async (request, reply) => {
   reply({
     message: 'This came from the api server',
     time: Date.now(),
