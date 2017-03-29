@@ -40,7 +40,8 @@ yarn exec items get # see src/server/items/command.js
 
     git clone https://github.com/eseom/hapi-react-fullstack-boilerplate.git
     yarn
-    vim src/server/core/settings.js (edit database connection config)
+	cp settings.sample.js settings.js
+    vim settings.js (edit database connection or something)
     yarn db:upgrade # for db migration
     yarn dev
 
