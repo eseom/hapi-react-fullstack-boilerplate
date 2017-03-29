@@ -8,3 +8,4 @@ npm-debug.log
 *.database
 *.swp
 *.sql
+settings.js

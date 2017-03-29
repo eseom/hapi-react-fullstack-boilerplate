@@ -3,6 +3,7 @@ require('./tools/babel-require');
 const path = require('path');
 
 module.exports = {
-	config: path.resolve('src/server/core', 'database.js'),
-	'migrations-path': path.resolve('src/server/core', 'migrations'),
+	config: path.resolve('db', 'database.js'),
+	'migrations-path': path.resolve('db', 'migrations'),
+	'seeders-path': path.resolve('db', 'seeders'),
 }

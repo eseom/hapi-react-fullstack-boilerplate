@@ -54,7 +54,8 @@
     "test:node:watch": "better-npm-run test:node:watch",
     "db:upgrade": "sequelize db:migrate",
     "db:downgrade": "sequelize db:migrate:undo",
-    "db:create": "sequelize migration:create"
+    "db:create": "sequelize migration:create",
+    "db:status": "sequelize db:migrate:status"
   },
   "betterScripts": {
     "server": {
