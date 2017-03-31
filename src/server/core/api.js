@@ -3,25 +3,25 @@ import { route } from '../core'
 
 const nestedRoute = route.nested('/api')
 
-nestedRoute.get('/load-info', async (request, reply) => {
+nestedRoute.get('/load-info', {
+  tags: ['api'],
+}, async (request, reply) => {
   reply({
     message: 'This came from the api server',
     time: Date.now(),
   })
-}, {
-  tags: ['api'],
 })
 
-route.get('/favicon.ico', {
+route.get('/favicon.ico', {}, {
   file: `${__dirname}/../static/favicon.ico`,
-}, {})
+})
 
-route.get('/static/{p*}', {
+route.get('/static/{p*}', {}, {
   directory: {
     path: '../static',
   },
-}, {})
+})
 
-route.any('/api/{p*}', async (request, reply) => {
+route.any('/api/{p*}', {}, async (request, reply) => {
   reply(Boom.notFound('NOT FOUND'))
-}, {})
+})

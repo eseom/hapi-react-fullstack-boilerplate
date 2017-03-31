@@ -1,16 +1,15 @@
 // @flow
 
 import Hapi from 'hapi'
-import fs from 'fs'
-import joi from 'joi'
-import boom from 'boom'
+import Fs from 'fs'
 import Inert from 'inert'
 import Vision from 'vision'
 import Path from 'path'
 import SocketIo from 'socket.io'
-import Sequelize from 'sequelize'
+
 import logger from '../logger'
 import settings from './settings'
+import { sequelize } from './db'
 
 const handlers = []
 const models = {}
@@ -24,26 +23,6 @@ command.route = (mod: string, identifier: string, callback: () => {}) => {
 
 command.execute = (mod: string, identifier: string) => {
   commands[mod][identifier]()
-}
-
-// prepare db connection
-const dbconfig = settings.database[process.env.NODE_ENV]
-let sequelizeWithOption
-
-if (dbconfig.url) {
-  sequelizeWithOption = new Sequelize(dbconfig.url, {
-    dialect: dbconfig.dialect,
-    protocol: dbconfig.protocol,
-    dialectOptions: dbconfig.dialectOptions,
-  })
-} else {
-  sequelizeWithOption = new Sequelize(
-    dbconfig.database, dbconfig.username,
-    dbconfig.password, {
-      storage: dbconfig.storage,
-      dialect: dbconfig.dialect,
-    },
-  )
 }
 
 const apps = [...settings.apps, 'core']
@@ -62,13 +41,13 @@ apps.forEach((app) => {
     // TODO load command separately
     const file = `../${app}/${mod}`
     try {
-      fs.statSync(`${__dirname}/${file}.js`)
+      Fs.statSync(`${__dirname}/${file}.js`)
     } catch (e) {
       return
     }
     try {
       if (mod === 'model') {
-        const importedModels = sequelizeWithOption.import(file)
+        const importedModels = sequelize.import(file)
         Object.keys(importedModels).forEach((it) => {
           models[it] = importedModels[it]
         })
@@ -83,7 +62,9 @@ Object.keys(models).forEach((modelName) => {
   if ('associate' in models[modelName]) models[modelName].associate(models)
 })
 
-const getServer = async () => {
+const server = new Hapi.Server()
+
+server.init = async () => {
   let port
 
   if (process.env.PORT) {
@@ -93,8 +74,6 @@ const getServer = async () => {
   } else {
     port = 8080
   }
-
-  const server = new Hapi.Server()
 
   server.connection({
     port,
@@ -129,6 +108,7 @@ const getServer = async () => {
               version: '0.1',
             },
           },
+          grouping: 'tags',
         },
       ], (err) => {
         if (err) reject(err)
@@ -175,122 +155,26 @@ const getServer = async () => {
   } catch (e) {
     logger.error('module install error', e)
   }
-
-
-  return server
 }
 
-const get = (
-  path: string,
-  handler: any,
-  config: Object,
-) => {
-  handlers.push({
-    path,
-    method: 'GET',
-    handler,
-    config,
+const makeRoutes = (prefix = '') => {
+  const innerRoute = {}
+  const methods = ['get', 'post', 'put', 'del', 'any']
+  methods.forEach((hm) => {
+    let method = hm.toUpperCase()
+    if (hm === 'any') method = '*'
+    if (hm === 'del') method = 'delete'
+    innerRoute[hm] = (path, config, handler) => handlers.push({
+      path: `${prefix}${path}`,
+      method,
+      handler,
+      config,
+    })
   })
+  innerRoute.nested = (prefixNested: string) => makeRoutes(prefix + prefixNested)
+  return innerRoute
 }
-
-const post = (
-  path: string,
-  handler: (request: Request, reply: () => {}) => any | any,
-  config: Object,
-) => {
-  handlers.push({
-    path,
-    method: 'POST',
-    handler,
-    config,
-  })
-}
-
-const put = (
-  path: string,
-  handler: Object,
-  config: Object,
-) => {
-  handlers.push({
-    path,
-    method: 'PUT',
-    handler,
-    config,
-  })
-}
-
-const del = (
-  path: string,
-  handler: any,
-  config: Object,
-) => {
-  handlers.push({
-    path,
-    method: 'DELETE',
-    handler,
-    config,
-  })
-}
-
-const any = (
-  path: string,
-  handler: any,
-  config: Object,
-) => {
-  handlers.push({
-    path,
-    method: '*',
-    handler,
-    config,
-  })
-}
-
-const route = {
-  get,
-  post,
-  put,
-  del,
-  any,
-  nested: (prefix: string) => ({
-    get: (
-      path: string,
-      handler: (request: Request, reply: () => {}) => any,
-      config: Object,
-    ) => {
-      get(prefix + path, handler, config)
-    },
-    post: (
-      path: string,
-      handler: (request: Request, reply: () => {}) => any,
-      config: Object,
-    ) => {
-      post(prefix + path, handler, config)
-    },
-    put: (
-      path: string,
-      handler: (request: Request, reply: () => {}) => any,
-      config: Object,
-    ) => {
-      put(prefix + path, handler, config)
-    },
-    del: (
-      path: string,
-      handler: (request: Request, reply: () => {}) => any,
-      config: Object,
-    ) => {
-      del(prefix + path, handler, config)
-    },
-    any: (
-      path: string,
-      handler: (request: Request, reply: () => {}) => any,
-      config: Object,
-    ) => {
-      any(prefix + path, handler, config)
-    },
-  }),
-}
-
-const sequelize = sequelizeWithOption
+const route = makeRoutes()
 
 export {
   modules,
@@ -299,7 +183,5 @@ export {
   models,
   sequelize,
   logger,
-  joi,
-  boom,
-  getServer,
+  server,
 }

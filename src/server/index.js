@@ -16,10 +16,10 @@ import ApiClient from '../helpers/ApiClient'
 import Html from '../helpers/Html'
 import getRoutes from '../routes'
 import logger from './logger'
-import { getServer } from './core'
+import { server } from './core'
 
 const start = async () => {
-  const server = await getServer()
+  await server.init()
   const pretty = new PrettyError()
 
   server.route({

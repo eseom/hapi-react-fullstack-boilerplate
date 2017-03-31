@@ -5,13 +5,21 @@ import { route, models } from '../core'
 const { User } = models
 const nestedRoute = route.nested('/api')
 
-nestedRoute.get('/load-auth', async (request, reply) => {
-  reply(request.yar.get('user') || null)
-}, {
+nestedRoute.get('/load-auth', {
   tags: ['api'],
+}, async (request, reply) => {
+  reply(request.yar.get('user') || null)
 })
 
-nestedRoute.post('/login', async (request, reply) => {
+nestedRoute.post('/login', {
+  tags: ['api'],
+  validate: {
+    payload: {
+      username: Joi.string().required(),
+      password: Joi.string().required(),
+    },
+  },
+}, async (request, reply) => {
   const username = request.payload.username
   const user = await User.find({
     where: {
@@ -33,19 +41,11 @@ nestedRoute.post('/login', async (request, reply) => {
       reply(Boom.unauthorized('password mismatch'))
     }, 2000)
   }
-}, {
-  tags: ['api'],
-  validate: {
-    payload: {
-      username: Joi.string().required(),
-      password: Joi.string().required(),
-    },
-  },
 })
 
-nestedRoute.get('/logout', async (request, reply) => {
+nestedRoute.get('/logout', {
+  tags: ['api'],
+}, async (request, reply) => {
   request.yar.clear('user')
   reply({ result: true })
-}, {
-  tags: ['api'],
 })
