@@ -11,15 +11,6 @@ global.SERVER = true
 global.DISABLE_SSR = false
 global.DEVELOPMENT = process.env.NODE_ENV !== 'production'
 
-if (DEVELOPMENT) {
-  if (!require('piping')({
-    hook: true,
-    ignore: /(\/\.|~$|\.json|\.scss$)/i,
-  })) {
-    return
-  }
-}
-
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools')
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../tools/isomorphic-tools'))
