@@ -1,7 +1,7 @@
 import Boom from 'boom'
-import { route } from '../core'
+import { server } from 'hails'
 
-const nestedRoute = route.nested('/api')
+const nestedRoute = server.route.nested('/api')
 
 nestedRoute.get('/load-info', {
   tags: ['api'],
@@ -12,16 +12,16 @@ nestedRoute.get('/load-info', {
   })
 })
 
-route.get('/favicon.ico', {}, {
+server.route.get('/favicon.ico', {}, {
   file: `${__dirname}/../static/favicon.ico`,
 })
 
-route.get('/static/{p*}', {}, {
+server.route.get('/static/{p*}', {}, {
   directory: {
     path: '../static',
   },
 })
 
-route.any('/api/{p*}', {}, async (request, reply) => {
+server.route.any('/api/{p*}', {}, async (request, reply) => {
   reply(Boom.notFound('NOT FOUND'))
 })

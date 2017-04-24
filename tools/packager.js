@@ -5,7 +5,6 @@ import Hapi from 'hapi'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackConfig from './webpack.development'
-import logger from '../src/server/logger'
 
 const compiler = webpack(webpackConfig)
 const host = 'localhost'
@@ -53,4 +52,4 @@ server.ext('onRequest', (request, reply) => {
 
 server.start()
 
-logger.info(`🚧  webpack packager has started at ${server.info.uri}`)
+console.log(`🚧  webpack packager has started at ${server.info.uri}`)

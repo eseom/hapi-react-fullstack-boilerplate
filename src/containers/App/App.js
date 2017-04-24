@@ -90,28 +90,28 @@ export default class App extends Component {
           <a className="navbar-brand" href="/">HRFB 0.1</a>
           <div className={!this.state.menuVisible && 'collapse navbar-collapse'}>
             <ul className="navbar-nav">
-              <li className={`nav-item ${activeItem === 'home' && 'active'}`}>
+              <li className={`nav-item ${activeItem === 'home' && 'active'}`} key="home">
                 <Link className="nav-link" to="/">
                   Home
                 </Link>
               </li>
-              <li className={`nav-item ${activeItem === 'about' && 'active'}`}>
+              <li className={`nav-item ${activeItem === 'about' && 'active'}`} key="about">
                 <Link className="nav-link" to="/about">
                   About
                 </Link>
               </li>
-              <li className={`nav-item ${activeItem === 'items' && 'active'}`}>
+              <li className={`nav-item ${activeItem === 'items' && 'active'}`} key="items">
                 <Link className="nav-link" to="/items">
                   Items
                 </Link>
               </li>
-              <li className={`nav-item ${activeItem === 'todo' && 'active'}`}>
+              <li className={`nav-item ${activeItem === 'todo' && 'active'}`} key="todo">
                 <Link className="nav-link" to="/todo">
                   Todo
                 </Link>
               </li>
               {user ?
-                <li className={`nav-item ${activeItem === 'chat' && 'active'}`}>
+                <li className={`nav-item ${activeItem === 'chat' && 'active'}`} key="chat">
                   <Link className="nav-link" to="/chat">
                     Chat
                   </Link>
@@ -119,13 +119,13 @@ export default class App extends Component {
                 :
                 null
               }
-              <li className={`nav-item ${activeItem === 'no_route_page' && 'active'}`}>
+              <li className={`nav-item ${activeItem === 'no_route_page' && 'active'}`} key="notfound">
                 <Link className="nav-link" to="/no_route_page">
                   NotFound
                 </Link>
               </li>
               {user ?
-                <li className="nav-item">
+                <li className="nav-item" key="logout">
                   {/* <span className="nav-link">Logged as {user.username}</span>{' '} */}
                   <Link className="nav-link" to="/logout" onClick={this.handleLogout}>
                     Logout
@@ -133,12 +133,12 @@ export default class App extends Component {
                 </li>
                 :
                 (() => ([
-                  <li className={`nav-item ${activeItem === 'login' && 'active'}`}>
+                  <li className={`nav-item ${activeItem === 'login' && 'active'}`} key="login">
                     <Link className="nav-link" to="/login">
                       Login
                     </Link>{' '}
                   </li>,
-                  <li className={`nav-item ${activeItem === 'join' && 'active'}`}>
+                  <li className={`nav-item ${activeItem === 'join' && 'active'}`} key="join">
                     <Link className="nav-link" to="/join">
                       Join
                     </Link>

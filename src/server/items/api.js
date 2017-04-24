@@ -1,8 +1,8 @@
 import Boom from 'boom'
-import { route } from '../core'
+import { server } from 'hails'
 import getItems from './getter'
 
-const nestedRoute = route.nested('/api')
+const nestedRoute = server.route.nested('/api')
 
 nestedRoute.get('/items', {
   tags: ['api'],
@@ -13,4 +13,15 @@ nestedRoute.get('/items', {
   } else {
     reply(Boom.serverUnavailable('Widget load fails 33% of the time. You were unlucky.', {}))
   }
+})
+
+nestedRoute({
+  config: {
+    tags: ['api'],
+  },
+  path: '/items2',
+  method: 'get',
+  handler: (request, reply) => {
+    reply({})
+  },
 })

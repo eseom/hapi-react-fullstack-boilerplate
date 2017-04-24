@@ -2,7 +2,9 @@
 
 import Path from 'path'
 import webpack from 'webpack'
-import logger from '../src/server/logger'
+import { server } from 'hails'
+
+const { logger } = server
 
 const assetsPath = Path.resolve(__dirname, '../static/dist')
 const host = 'localhost'

@@ -1,9 +1,9 @@
 import Joi from 'joi'
 import Boom from 'boom'
-import { route, models } from '../core'
+import { server, models } from 'hails'
 
 const { User } = models
-const nestedRoute = route.nested('/api')
+const nestedRoute = server.route.nested('/api')
 
 nestedRoute.get('/load-auth', {
   tags: ['api'],

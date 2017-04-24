@@ -1,51 +1,45 @@
 module.exports = {
-  version: '0.1',
-  apps: [
-    'user',
-    'ranky',
-    'schedule',
-    'band',
-    'cafe',
-  ],
-  broker: {
-    development: {
-      url: 'redis://localhost:6379/10',
-    },
-    production: {
-      url: 'redis://localhost:6379/10',
-    },
-  },
-  redis: {
-    development: {
-      url: 'redis://localhost:6379/10',
-    },
-    production: {
-      url: 'redis://localhost:6379/10',
-    },
-  },
-  schedules: {
-    development: [
-      ['1 1 * * * *', 'kuejs.test'],
+  development: {
+    version: '0.1',
+    modules: [
+      'core',
+      'user',
+      'todo',
+      'items',
     ],
-  },
-  database: {
-    development: {
-      url: 'postgres://user@localhost/woo1',
-      dialect: 'postgres',
-      protocol: 'postgres',
-      dialectOptions: {
-        ssl: false,
-      },
+    broker: {
+      url: 'redis://localhost:6379/10',
     },
-    development_sqlite3: {
+    redis: {
+      url: 'redis://localhost:6379/10',
+    },
+    schedules: [
+      // ['1 1 * * * *', 'kuejs.test'],
+    ],
+    database: {
       storage: 'test.database',
       dialect: 'sqlite',
     },
-    test: {
-      storage: ':memory:',
-      dialect: 'sqlite',
+  },
+  production: {
+    version: '0.1',
+    modules: [
+      'user',
+      'ranky',
+      'schedule',
+      'band',
+      'cafe',
+    ],
+    broker: {
+      url: 'redis://localhost:6379/10',
     },
-    production: {
+    redis: {
+      url: 'redis://localhost:6379/10',
+    },
+    schedules: [
+      // ['1 1 * * * *', 'kuejs.test'],
+    ],
+    database: {
       url: process.env.DATABASE_URL,
       logging: false,
       dialect: 'postgres',

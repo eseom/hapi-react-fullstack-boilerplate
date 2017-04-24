@@ -6,6 +6,8 @@ const path = require('path')
 
 const rootDir = path.resolve(__dirname, '..')
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+
 global.CLIENT = false
 global.SERVER = true
 global.DISABLE_SSR = false

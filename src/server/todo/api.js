@@ -1,10 +1,9 @@
 import Boom from 'boom'
 import Joi from 'joi'
-import logger from '../logger'
-import { route, models } from '../core'
+import { server, logger, models } from 'hails'
 
 const { Todo } = models
-const nestedRoute = route.nested('/api/todos')
+const nestedRoute = server.route.nested('/api/todos')
 
 nestedRoute.get('/', {
   tags: ['api'],
