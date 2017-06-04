@@ -2,6 +2,9 @@
 /* eslint no-param-reassign: "off" */
 
 import bcrypt from 'bcrypt-nodejs'
+import { server } from 'hails'
+
+const { sequelize, DataTypes } = server
 
 const hasSecurePassword = (user, options, callback) => {
   if (user.password !== user.passwordConfirmation) {
@@ -14,34 +17,34 @@ const hasSecurePassword = (user, options, callback) => {
   })
 }
 
-export default (sequelize: Object, DataTypes: Object) => {
-  const { INTEGER, STRING, VIRTUAL, DATE } = DataTypes
+const { INTEGER, STRING, VIRTUAL, DATE } = DataTypes
 
-  // https://nodeontrain.xyz/tuts/secure_password/
-  const User = sequelize.define('users', {
-    id: { type: INTEGER, primaryKey: true, autoIncrement: true, scopes: ['public'] },
-    username: STRING,
-    passwordDigest: {
-      field: 'password',
-      type: STRING,
-      validate: {
-        notEmpty: true,
-      },
+// https://nodeontrain.xyz/tuts/secure_password/
+const User = sequelize.define('users', {
+  id: { type: INTEGER, primaryKey: true, autoIncrement: true, scopes: ['public'] },
+  username: STRING,
+  passwordDigest: {
+    field: 'password',
+    type: STRING,
+    validate: {
+      notEmpty: true,
     },
-    password: {
-      field: 'passwordVirtual',
-      type: VIRTUAL,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      },
+  },
+  password: {
+    field: 'passwordVirtual',
+    type: VIRTUAL,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
     },
-    passwordConfirmation: {
-      type: VIRTUAL,
-    },
-    createdAt: { type: DATE, field: 'created_at' },
-    updatedAt: { type: DATE, field: 'updated_at' },
-  }, {
+  },
+  passwordConfirmation: {
+    type: VIRTUAL,
+  },
+  createdAt: { type: DATE, field: 'created_at' },
+  updatedAt: { type: DATE, field: 'updated_at' },
+},
+  {
     indexes: [{ unique: true, fields: ['username'] }],
     instanceMethods: {
       authenticate: function authenticate(value) {
@@ -62,20 +65,20 @@ export default (sequelize: Object, DataTypes: Object) => {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
   })
-  User.beforeCreate((user, options, callback) => {
-    user.username = user.username.toLowerCase()
-    if (user.password) {
-      return hasSecurePassword(user, options, callback)
-    }
-    return callback(null, options)
-  })
-  User.beforeUpdate((user, options, callback) => {
-    user.username = user.username.toLowerCase()
-    if (user.password) hasSecurePassword(user, options, callback)
-    return callback(null, options)
-  })
 
-  return {
-    User,
+User.beforeCreate((user, options, callback) => {
+  user.username = user.username.toLowerCase()
+  if (user.password) {
+    return hasSecurePassword(user, options, callback)
   }
+  return callback(null, options)
+})
+User.beforeUpdate((user, options, callback) => {
+  user.username = user.username.toLowerCase()
+  if (user.password) hasSecurePassword(user, options, callback)
+  return callback(null, options)
+})
+
+export {
+  User,
 }
