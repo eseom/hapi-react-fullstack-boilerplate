@@ -1,0 +1,7 @@
+// remove experimental decorator vscode warning when coding js file
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "allowJs": true
+  }
+}
