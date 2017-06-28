@@ -1,8 +1,8 @@
 // @flow
 
-import Path from 'path'
-import webpack from 'webpack'
-import { server } from 'hails'
+const Path = require('path')
+const webpack = require('webpack')
+const { server } = require('hails')
 
 const { logger } = server
 
@@ -28,7 +28,7 @@ if (babelrcObject.env) {
   babelConfig = babelrcObject.env.development
 }
 
-export default {
+module.exports = {
   devtool: 'inline-source-map',
   context: Path.resolve(__dirname, '..'),
   entry: {

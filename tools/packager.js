@@ -1,10 +1,11 @@
 /* eslint import/no-extraneous-dependencies: "off" */
+/* eslint-disable no-console */
 
-import webpack from 'webpack'
-import Hapi from 'hapi'
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpackHotMiddleware from 'webpack-hot-middleware'
-import webpackConfig from './webpack.development'
+const webpack = require('webpack')
+const Hapi = require('hapi')
+const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
+const webpackConfig = require('./webpack.development')
 
 const compiler = webpack(webpackConfig)
 const host = 'localhost'
