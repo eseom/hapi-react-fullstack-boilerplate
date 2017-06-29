@@ -4,7 +4,6 @@ module.exports = {
     return queryInterface.createTable('users', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true, scopes: ['public'] },
       username: STRING,
-      email: STRING,
       created_at: DATE,
       updated_at: DATE,
     }).then(() => {
@@ -26,9 +25,9 @@ module.exports = {
     }).then(() => (
       queryInterface.sequelize.query(
         `INSERT INTO users
-          (id, username, email, created_at, updated_at)
+          (id, username, created_at, updated_at)
           VALUES
-          (1, 'tester', 'tester@hrfb.com', current_timestamp, current_timestamp);`)
+          (1, 'tester', current_timestamp, current_timestamp);`)
     ))
   },
   down: queryInterface => (

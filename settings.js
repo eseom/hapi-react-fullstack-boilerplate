@@ -23,6 +23,7 @@ module.exports = {
   },
   production: {
     version: '0.1',
+    port: process.env.PORT,
     modules: [
       'core',
       'user',
