@@ -1,8 +1,8 @@
 export default {
   app: {
     title: 'hapi-react-fullstack-boilerplate',
-    subtitle: 'Hapi, Sequelize, React, Redux, etc.',
-    description: 'React full web stack with rendering server and hapi echosystem',
+    subtitle: 'Hapi, Sequelize, React, Redux, Bootstrap, etc.',
+    description: 'React Full web stack with rendering server and hapi echosystem',
     head: {
       titleTemplate: 'hapi-react-fullstack-boilerplate: %s',
       meta: [

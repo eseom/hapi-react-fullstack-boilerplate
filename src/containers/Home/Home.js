@@ -7,11 +7,19 @@ import config from '../../config'
 
 export default class Home extends Component {
   render() {
-    const styles = require('./Home.scss')
+    const styles = {
+      thumb1: {
+        backgroundPosition: '50% 50% !important',
+        backgroundSize: 'cover !important',
+        width: '100%',
+        height: 300,
+      },
+    }
     const items = [
       'HapiJS',
       'ReactJS 15',
       'SSR (server side rendering)',
+      'no local proxy for development and production',
       'Webpack2 + React-transform and react-transform-hmr',
       'React-Router 3',
       'Redux',
@@ -22,33 +30,40 @@ export default class Home extends Component {
       'API Documentation Swagger',
       'Sequelize - covers traditional web apps.',
       'session based authentication',
-      'Socket.io',
+      'vue-nes',
       'sass loader, node sass',
     ]
     return (
-      <div className={`${styles.home} container-fluid`}>
+      <div className={`${styles.home}`}>
         <Helmet title="Home" />
 
-        <h3>{config.app.title}</h3>
-        <p>
-          (list, link, message, redux)
-        </p>
-
-        <div className="alert alert-info">
-          <h5 className="alert-heading">{config.app.subtitle}</h5>
-          <p className="mb-0">
-            {config.app.description}
-          </p>
-          <p className="mb-0">
-            <a
-              className={styles.github} href="https://github.com/eseom/hapi-react-fullstack-boilerplate.git"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <icon className="fa fa-github" />{' '}
-              View on github
+        <div className="row" style={{ marginBottom: 30 }}>
+          <div className="col-lg-7 headline">
+            <h3 style={{ lineHeight: '130%', marginTop: 70 }}>
+              <strong style={{ fontSize: '2.0rem', color: '#8A629C' }}>{config.app.title}</strong>
+              <br />
+              (list, link, message, redux)
+          </h3>
+          </div>
+          <div className="col-lg-12" style={{ textAlign: 'center', marginTop: 20, marginBottom: 30 }}>
+            <p className="mb-0">
+              {config.app.description}
+            </p>
+            <p className="mb-0">
+              <a
+                className={styles.github} href="https://github.com/eseom/hapi-react-fullstack-boilerplate.git"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <icon className="fa fa-github" />{' '}
+                VIEW ON GITHUB
             </a>
-          </p>
+            </p>
+          </div>
+          <div className="col-lg-12">
+            <img src={require('./jumbo1.jpg')} style={{ width: '100%' }} alt="" />
+            <a href="http://www.lanlinglaurel.com/london-city-images/4934473.html"><i>image from http://www.lanlinglaurel.com/london-city-images/4934473.html</i></a>
+          </div>
         </div>
 
         <h3>Features</h3>
@@ -62,7 +77,25 @@ export default class Home extends Component {
         <p>
           <CounterButton color="red" basic />
         </p>
+
+        <div className="row">
+          <div className="headline offset-lg-5 col-lg-7" style={{ textAlign: 'right' }}>
+            <h3 style={{ lineHeight: '130%', marginTop: 70, marginBottom: 80 }}>
+              <i className="fa fa-quote-left" />&nbsp;&nbsp;
+              Think like a man of action and<br />act like man of thought.
+          </h3>
+          </div>
+        </div>
+
+        <p />
+
+        <ul style={{ display: 'none' }}>
+          {items.map((it, index) => (
+            <li key={index}>{it}</li>
+          ))}
+        </ul>
       </div>
+
     )
   }
 }

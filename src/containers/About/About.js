@@ -17,13 +17,17 @@ export default class About extends Component {
     const kitten = require('./kitten.jpg')
     return (
       <div className="container-fluid">
-        <Helmet title="About Us" />
+        <Helmet title="About us" />
 
-        <h3>About us</h3>
-
-        <p>
-          (widgets)
-        </p>
+        <div className="row" style={{ marginBottom: 30 }}>
+          <div className="col-lg-7 headline">
+            <h2 style={{ lineHeight: '130%', marginTop: 30 }}>
+              <strong>About us</strong>
+              <br />
+              <small>(widgets)</small>
+            </h2>
+          </div>
+        </div>
 
         <div className="alert alert-info">
           This project was created by Eunseok Eom
@@ -53,7 +57,7 @@ export default class About extends Component {
           Psst! Would you like to see a kitten?
           <button
             style={{ marginLeft: 10 }}
-            className={`btn btn-sm btn-${(showKitten ? 'danger' : 'success')}`}
+            className={`btn btn-sm btn-outline-${(showKitten ? 'danger' : 'success')}`}
             onClick={this.handleToggleKitten}
           >
             {showKitten ? 'No! Take it away!' : 'Yes! Please!'}

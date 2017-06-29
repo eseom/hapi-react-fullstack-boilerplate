@@ -15,19 +15,19 @@ nestedRoute.post('/login', {
   tags: ['api'],
   validate: {
     payload: {
-      username: Joi.string().required(),
+      email: Joi.string().required(),
       password: Joi.string().required(),
     },
   },
 }, async (request, reply) => {
-  const username = request.payload.username
+  const email = request.payload.email
   const user = await User.find({
     where: {
-      username,
+      email,
     },
   })
   if (!user) {
-    reply(Boom.unauthorized(`no such user: ${username}`))
+    reply(Boom.unauthorized(`no such user: ${email}`))
     return
   }
   const authenticated = user.authenticate(request.payload.password)

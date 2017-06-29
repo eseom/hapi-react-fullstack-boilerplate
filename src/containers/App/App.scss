@@ -1,8 +1,24 @@
-code {
-  /* code tag from bootstrap */
-  padding: .2rem .4rem;
-  font-size: 90%;
-  color: #bd4147;
-  background-color: #f7f7f9;
-  border-radius: .25rem;
-}
+headerLink {                                        
+  a {                                                
+    position: relative;                        
+  }                                       
+  a:before {                                         
+    content: "";                                     
+    position: absolute;                              
+    height: 2px;                                     
+    bottom: 0;                                       
+    left: 8px;                                       
+    right: 9px;                                      
+    background-color: #000;     
+    visibility: hidden;                              
+    -webkit-transform: scaleX(0);                    
+    transform: scaleX(0);                            
+    -webkit-transition: all 0.3s ease-in-out 0s;     
+    transition: all 0.3s ease-in-out 0s;             
+  }                                                  
+  a:hover:before {                                   
+    visibility: visible;                             
+    -webkit-transform: scaleX(1);                    
+    transform: scaleX(1);                            
+  }                                                  
+}                                                    

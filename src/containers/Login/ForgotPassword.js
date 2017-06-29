@@ -2,22 +2,14 @@
 
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import Helmet from 'react-helmet'
 import { reduxForm, SubmissionError } from 'redux-form'
 import * as authActions from '../../redux/modules/auth'
-import LoginForm from './LoginForm'
-
-const defaultLoginError = { error: false, message: '' }
-
-const responseFacebook = (response) => {
-  authActions.loginFacebook(response)
-}
+import ForgotPasswordForm from './ForgotPasswordForm'
 
 @connect(
   store => ({
-    user: store.auth.user && store.auth.user.username ? store.auth.user : null,
-    loginError: store.auth.loginError,
-    loggingIn: store.auth.loggingIn,
   }),
   authActions,
 )
@@ -29,20 +21,16 @@ export default class extends Component {
 
   static propTypes = {
     user: PropTypes.object,
-    loginError: PropTypes.object,
-    login: PropTypes.func,
     logout: PropTypes.func,
   }
 
   state = {
-    loginError: defaultLoginError,
+    requested: false,
   }
 
   onSubmit = (orig) => {
-    event.preventDefault()
     const values = Object.assign({
       email: '',
-      password: '',
     }, orig)
     const seo = {} // submission error object
     let errorFound = false
@@ -55,10 +43,6 @@ export default class extends Component {
       seo.email = 'email is required'
       errorFound = true
     }
-    if (values.password === '') {
-      seo.password = 'password is required'
-      errorFound = true
-    }
     if (errorFound) {
       throw new SubmissionError({
         ...seo,
@@ -66,48 +50,42 @@ export default class extends Component {
       })
     }
 
-    // 로그인 요청
-    this.props.login(values.email, values.password)
-    return false
-  }
+    // 비밀번호 찾기 요청
+    // this.props.findPassword(values.email)
 
-  componentWillReceiveProps(props) {
-    if (!this.props.user && props.user) { // logged in
-      props.router.push('/')
-      return
-    }
     this.setState({
-      loginError: (!this.props.loginError && props.loginError ?
-        props.loginError : defaultLoginError),
+      requested: true,
     })
   }
 
   render() {
     const styles = require('./Login.scss')
-    const {
-      user, logout,
-    } = this.props
-    const { loginError } = this.state
     return (
       <div className={`${styles.loginPage} container-fluid`}>
 
-        <Helmet title="Login" />
+        <Helmet title="Forgot password?" />
 
-        {user ?
+        {this.state.requested ?
           <div>
-            <p>Hi, you are currently logged in as {user.username}.</p>
-            <div>
-              <button onClick={logout} className="btn btn-default"><i className="fa fa-signout" />{' '}Log Out</button>
+            <h2 className="title">Check your email <span /></h2>
+            <div style={{ marginTop: 30, marginBottom: 30, textAlign: 'center' }}>
+              <img src={require('../Join/letter.png')} alt="" style={{ width: 200 }} />
+            </div>
+            <div style={{ marginTop: 20 }}>
+              Email sent that you could find your account by.
+              You would receive an email containing instructions on how to create a new password.
+            </div>
+            <div style={{ marginTop: 20 }}>
+              <small> Back to <Link to="/login">Login</Link></small>
             </div>
           </div>
           :
-          <LoginForm
+          <ForgotPasswordForm
             submitValidate={this.onSubmit}
-            loginError={loginError}
-            responseFacebook={responseFacebook}
           />
         }
       </div>
     )
   }
 }
+

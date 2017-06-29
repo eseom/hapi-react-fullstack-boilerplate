@@ -10,7 +10,8 @@ import { isLoaded as isAuthLoaded, load as loadAuth, logout } from '../../redux/
 import { InfoBar } from '../../components'
 import config from '../../config'
 import '../../helpers/Html.scss'
-// import styles from './App.scss'
+
+import styles from './App.scss'
 
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
@@ -75,84 +76,72 @@ export default class App extends Component {
     this.setState({ menuVisible: !this.state.menuVisible })
   }
 
-  render() {
+  renderHeader() {
     const { user } = this.props
     const { activeItem } = this.state
+    return (
+      <nav className="navbar navbar navbar-light navbar-toggleable-md bg-faded" style={{ backgroundColor: '#fff' }}>
+        <button className="navbar-toggler navbar-toggler-right" type="button" onClick={this.toggleMenu}>
+          <span className="navbar-toggler-icon" />
+        </button>
+        <Link className="navbar-brand headline" to="/">hapi react fullstack boilerplate</Link>
+        <div className={!this.state.menuVisible && 'collapse navbar-collapse'}>
+          <ul className="navbar-nav mr-auto mt-2 mt-lg-0" />
+          <ul className="navbar-nav my-2 my-lg-0">
+            <li className={`nav-item ${activeItem === 'home' && 'active'}`} key="home">
+              <Link className="nav-link" to="/"> Home </Link>
+            </li>
+            <li className={`nav-item ${activeItem === 'about' && 'active'}`} key="about">
+              <Link className="nav-link" to="/about"> About </Link>
+            </li>
+            <li className={`nav-item ${activeItem === 'items' && 'active'}`} key="items">
+              <Link className="nav-link" to="/items"> Items </Link>
+            </li>
+            <li className={`nav-item ${activeItem === 'todo' && 'active'}`} key="todo">
+              <Link className="nav-link" to="/todo"> Todo </Link>
+            </li>
+            {user ?
+              <li className={`nav-item ${activeItem === 'chat' && 'active'}`} key="chat">
+                <Link className="nav-link" to="/chat"> Chat </Link>
+              </li>
+              :
+              null
+            }
+            <li className={`nav-item ${activeItem === 'no_route_page' && 'active'}`} key="notfound">
+              <Link className="nav-link" to="/no_route_page"> NotFound </Link>
+            </li>
+            {user ?
+              <li className={`${styles.headerLink} nav-item`} key="logout">
+                {/* <span className="nav-link">Logged as {user.username}</span>{' '} */}
+                <Link className="nav-link" to="/logout" onClick={this.handleLogout}> Logout </Link>
+              </li>
+              :
+              (() => ([
+                <li className={`${styles.headerLink} nav-item ${activeItem === 'login' && 'active'}`} key="login">
+                  <Link className="nav-link" to="/login"> Login </Link>{' '}
+                </li>,
+                <li className={`${styles.headerLink} nav-item ${activeItem === 'join' && 'active'}`} key="join">
+                  <Link className="nav-link" to="/Join"> Join </Link>
+                </li>,
+              ]))()
+            }
+          </ul>
+        </div>
+      </nav>
+    )
+  }
 
+  render() {
     return (
       <div>
         <Helmet {...config.app.head} />
 
-        <nav className="navbar navbar-inverse navbar-toggleable-md bg-inverse bg-faded">
-          <button className="navbar-toggler navbar-toggler-right" type="button" onClick={this.toggleMenu}>
-            <span className="navbar-toggler-icon" />
-          </button>
-          <a className="navbar-brand" href="/">HRFB 0.1</a>
-          <div className={!this.state.menuVisible && 'collapse navbar-collapse'}>
-            <ul className="navbar-nav">
-              <li className={`nav-item ${activeItem === 'home' && 'active'}`} key="home">
-                <Link className="nav-link" to="/">
-                  Home
-                </Link>
-              </li>
-              <li className={`nav-item ${activeItem === 'about' && 'active'}`} key="about">
-                <Link className="nav-link" to="/about">
-                  About
-                </Link>
-              </li>
-              <li className={`nav-item ${activeItem === 'items' && 'active'}`} key="items">
-                <Link className="nav-link" to="/items">
-                  Items
-                </Link>
-              </li>
-              <li className={`nav-item ${activeItem === 'todo' && 'active'}`} key="todo">
-                <Link className="nav-link" to="/todo">
-                  Todo
-                </Link>
-              </li>
-              {user ?
-                <li className={`nav-item ${activeItem === 'chat' && 'active'}`} key="chat">
-                  <Link className="nav-link" to="/chat">
-                    Chat
-                  </Link>
-                </li>
-                :
-                null
-              }
-              <li className={`nav-item ${activeItem === 'no_route_page' && 'active'}`} key="notfound">
-                <Link className="nav-link" to="/no_route_page">
-                  NotFound
-                </Link>
-              </li>
-              {user ?
-                <li className="nav-item" key="logout">
-                  {/* <span className="nav-link">Logged as {user.username}</span>{' '} */}
-                  <Link className="nav-link" to="/logout" onClick={this.handleLogout}>
-                    Logout
-                  </Link>
-                </li>
-                :
-                (() => ([
-                  <li className={`nav-item ${activeItem === 'login' && 'active'}`} key="login">
-                    <Link className="nav-link" to="/login">
-                      Login
-                    </Link>{' '}
-                  </li>,
-                  <li className={`nav-item ${activeItem === 'join' && 'active'}`} key="join">
-                    <Link className="nav-link" to="/join">
-                      Join
-                    </Link>
-                  </li>,
-                ]))()
-              }
-            </ul>
+        {this.renderHeader()}
+        <div className="container" style={{ maxWidth: 1010 }}>
+          <p />
+          <div>
+            {this.props.children}
           </div>
-        </nav>
-
-        <p />
-
-        <div>
-          {this.props.children}
         </div>
 
         <div className="container-fluid">

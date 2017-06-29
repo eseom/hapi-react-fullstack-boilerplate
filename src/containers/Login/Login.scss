@@ -1,2 +1,28 @@
-.login {
+.loginPage {
+  margin-top: 36px;
+  width: 400px;
+  .description {
+    padding: 5px;
+    font-size: 90%;
+    color: #f53c3c;
+  }
+}
+
+.error {
+  border: 1px solid #f53c3c !important;
+}
+.facebookButton{
+  width: 100%;
+  background: #3b5998;
+  border: 0;
+  border-radius: 4px;
+  color: white;
+  padding: 10px;
+  &:hover {
+    background: #2d4373;
+  }
+}
+.submitButton {
+  border-radius: 20px;
+  font-weight: bold;
 }

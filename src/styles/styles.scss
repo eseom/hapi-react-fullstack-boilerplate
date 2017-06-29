@@ -1,5 +1,36 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
-body {
-  font-family: 'Nunito', monospace;
-}
+body, h1, h2, h3, h4, h5, h6, input, textarea, button {
+  font-family: 'source sans pro', sans-serif;
+  font-weight: 400;
+  color: #484848;
+} 
+
+.navbar-brand {                                      
+  font-family: 'Poppins', sans-serif !important;     
+} 
+
+body {                                               
+  background-color: #FAFAFA;                         
+} 
+
+h2.title {                                           
+  font-weight: 300;                                  
+  &> span {
+    font-size: 50%;                                  
+    font-weight: 400;                                
+    opacity: 0.6;
+  } 
+} 
+
+.headline {                                          
+  h2, h3 {
+    font-weight: 300;                                
+  } 
+} 
+
+input::placeholder {                                 
+  font-style: italic;                                
+  font-size: 80%;
+  color: #cdcdcd;                                    
+} 

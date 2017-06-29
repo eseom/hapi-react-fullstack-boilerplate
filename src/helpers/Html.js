@@ -40,18 +40,18 @@ export default class Html extends Component {
 
           <link rel="shortcut icon" href="/favicon.ico?v=3" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" />
+          <link href="https://fonts.googleapis.com/css?family=Poppins|Source+Sans+Pro:300,300i,400,400i" rel="stylesheet" />
           <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
           {/* --- production mode --- */}
           {/* styles (will be present only in production with webpack extract text plugin) */}
           {Object.keys(assets.styles).length !== 0 ?
-           Object.keys(assets.styles).map(style => (
-             <link
-               href={assets.styles[style]} key={style} media="screen, projection"
-               rel="stylesheet" type="text/css" charSet="UTF-8"
-             />
-          )) : null}
+            Object.keys(assets.styles).map(style => (
+              <link
+                href={assets.styles[style]} key={style} media="screen, projection"
+                rel="stylesheet" type="text/css" charSet="UTF-8"
+              />
+            )) : null}
 
           {/* --- development mode --- */}
           {/* outputs a <style/> tag with all required css files. */}

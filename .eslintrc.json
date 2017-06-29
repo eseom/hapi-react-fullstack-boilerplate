@@ -5,6 +5,13 @@
     "jsx-a11y",
     "import"
   ],
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "./tools/webpack.development.js"
+      }
+    }
+  },
   "parser": "babel-eslint",
   "rules": {
     "semi": [1, "never"],

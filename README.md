@@ -1,5 +1,5 @@
 # hapi-react-fullstack-boilerplate
-Hapi, Sequelize, React, Redux, SemanticUI, etc.
+Hapi, Sequelize, React, Redux, Bootstrap, etc.
 
 react full web stack with rendering server, hapi echosystem
 
@@ -11,11 +11,11 @@ react full web stack with rendering server, hapi echosystem
 
 [heroku deployed demo](https://hapi-react-fullstack-bp.herokuapp.com/)
 
-##Features
+## Features
 * [HapiJS](https://github.com/hapijs/hapi)
 * [ReactJS](https://github.com/reactjs)
 * SSR
-* Webpack2 + [React-transform](https://github.com/gaearon/babel-plugin-react-transform) and [react-transform-hmr](https://github.com/gaearon/react-transform-hmr)
+* Webpack 2
 * [React-Router](https://github.com/rackt/react-router)
 * [Redux](https://github.com/rackt/redux)
 * Document Head [React-Helmet](https://github.com/nfl/react-helmet)
@@ -25,43 +25,62 @@ react full web stack with rendering server, hapi echosystem
 * API Documentation [Swagger](https://github.com/glennjones/hapi-swagger)
 * [Sequelize](https://github.com/sequelize/sequelize) - cover traditional web apps.
 * session based authentication
-* [Socket.io](https://github.com/socketio/socket.io)
+* react-nes
 * sass loader, node sass
 
 ## Extra features
-* Django style Hapi module structure
+* [hails](https://github.com/eseom/hails) - Django style Hapi module structure
 * custom console execution with the context
 ```bash
-yarn exec items get # see src/server/items/command.js
+yarn hails exec items get # see src/server/items/command.js
 ```
 
 ## Usage
 **development**
 
-    git clone https://github.com/eseom/hapi-react-fullstack-boilerplate.git
-    yarn
-	cp settings.sample.js settings.js
-    vim settings.js (edit database connection or something)
-    yarn db:upgrade # for db migration
-    yarn dev
+```bash
+git clone https://github.com/eseom/hapi-react-fullstack-boilerplate.git <project>
+cd <project>
+yarn
+cp settings.sample.js settings.js
+vim settings.js (edit database connection or something)
+yarn hails db:upgrade # for db migration
+yarn dev
+```
+
+**db**
+```bash
+yarn hails db:create # create a sequelize migration file in db/migrations/
+yarn hails db:up # process pending migrations
+yarn hails db:down # revert the last migration
+yarn hails db:status # show migration status
+```
 
 **testing**
 
-    yarn test
-    yarn test:node
-    yarn test:node:watch
+```bash
+yarn test
+yarn test:node
+yarn test:node:watch
+```
 
 **production**
 
-    yarn build
-    [PORT=4000 ]DATABASE_URL=postgres://<username>@<hostname>:<port>/<dbname> yarn start
+```bash
+yarn build
+[PORT=4000 ]DATABASE_URL=postgres://<username>@<hostname>:<port>/<dbname> yarn start
+```
 
 **API Interface**
 
     Path: /documentation
 
 ## Editor Configuration
-**Atom**
+- **vscode**
+```
+what can I do?
+```
+- **Atom**
 ```bash
 apm install editorconfig es6-javascript atom-ternjs javascript-snippets linter linter-eslint language-babel autocomplete-modules file-icons
 ```

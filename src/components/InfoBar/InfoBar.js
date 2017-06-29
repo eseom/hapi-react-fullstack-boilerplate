@@ -17,10 +17,11 @@ const InfoBar = (props) => {
       {' '}
       <span className={styles.time}>{info && `at ${new Date(info.time)}`}</span>
       <br />
+      <br />
       <button
-        className="btn btn-sm btn-info" onClick={load}
+        className="btn btn-sm btn-outline-info" onClick={load}
       >
-        <i className="fa fa-refresh" />
+        <i className="fa fa-refresh" />{' '}
         Reload from server
       </button>
     </div>
