@@ -3,7 +3,6 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import io from 'socket.io-client'
 import { Provider } from 'react-redux'
 import { Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
@@ -20,24 +19,7 @@ const dest = document.getElementById('content')
 const store = configureStore(bHistory, client, window.processedStore)
 const history = syncHistoryWithStore(bHistory, store)
 
-function initSocket() {
-  const socket = io('', { path: '/ws' })
-  socket.on('news', (data) => {
-    console.debug(data)
-    socket.emit('my other event', { my: 'data from client' })
-  })
-  socket.on('msg', (data) => {
-    console.debug(data)
-  })
-  socket.on('disconnect', () => {
-    socket.disconnect()
-    global.socket = null
-  })
-
-  return socket
-}
-
-global.socket = initSocket()
+// global.socket = initSocket()
 
 const RootComponent = () => (
   <Provider store={store} key="provider">
