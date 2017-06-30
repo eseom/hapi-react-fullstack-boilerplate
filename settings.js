@@ -8,10 +8,10 @@ module.exports = {
       'items',
     ],
     broker: {
-      url: 'redis://localhost:6379/10',
+      url: 'redis://:dev@localhost:6379/10',
     },
     redis: {
-      url: 'redis://localhost:6379/10',
+      url: 'redis://:dev@localhost:6379/10',
     },
     schedules: [
       // ['1 1 * * * *', 'kuejs.test'],

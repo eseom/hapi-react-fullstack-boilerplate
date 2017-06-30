@@ -8,10 +8,10 @@ module.exports = {
       'items',
     ],
     broker: {
-      url: 'redis://localhost:6379/10',
+      url: 'redis://:dev@localhost:6379/10',
     },
     redis: {
-      url: 'redis://localhost:6379/10',
+      url: 'redis://:dev@localhost:6379/10',
     },
     schedules: [
       // ['1 1 * * * *', 'kuejs.test'],
@@ -23,31 +23,34 @@ module.exports = {
   },
   production: {
     version: '0.1',
+    port: process.env.PORT,
     modules: [
+      'core',
       'user',
-      'ranky',
-      'schedule',
-      'band',
-      'cafe',
+      'todo',
+      'items',
     ],
     broker: {
-      url: 'redis://localhost:6379/10',
+      url: process.env.REDIS_URL,
     },
     redis: {
-      url: 'redis://localhost:6379/10',
+      url: process.env.REDIS_URL,
     },
     schedules: [
       // ['1 1 * * * *', 'kuejs.test'],
     ],
     database: {
       url: process.env.DATABASE_URL,
-      logging: false,
-      dialect: 'postgres',
-      protocol: 'postgres',
-      dialectOptions: {
-        ssl: false,
+      options: {
+        logging: false,
+        dialect: 'postgres',
+        protocol: 'postgres',
+        dialectOptions: {
+          ssl: false,
+        },
       },
       use_env_variable: 'DATABASE_URL',
+      migrationStorageTableName: 'sequelize_meta',
     },
   },
 }
