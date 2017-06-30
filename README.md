@@ -17,7 +17,7 @@ react full web stack with rendering server, hapi echosystem
 * SSR
 * Webpack 2
 * [React-Router](https://github.com/rackt/react-router)
-* [Redux](https://github.com/rackt/redux)
+* [Redux](https://github.com/reactjs/redux)
 * Document Head [React-Helmet](https://github.com/nfl/react-helmet)
 * [BabelJs](https://babeljs.io/)
 * Linting with eslint & jscs
