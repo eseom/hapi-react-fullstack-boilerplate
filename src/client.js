@@ -20,7 +20,8 @@ const dest = document.getElementById('content')
 const store = configureStore(bHistory, client, window.processedStore)
 const history = syncHistoryWithStore(bHistory, store)
 
-global.socket = connectNes(store, 'ws://localhost:3000/ws')
+const wsUrl = `ws${window.location.protocol === 'https:' ? 's' : ''}://${window.location.host}`
+global.socket = connectNes(store, wsUrl)
 
 const RootComponent = () => (
   <Provider store={store} key="provider">
