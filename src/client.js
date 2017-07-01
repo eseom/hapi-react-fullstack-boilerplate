@@ -12,6 +12,7 @@ import useScroll from 'scroll-behavior/lib/useStandardScroll'
 import { configureStore } from './redux/configureStore'
 import ApiClient from './helpers/ApiClient'
 import getRoutes from './routes'
+import { connect as connectNes } from './redux/react-hapines'
 
 const client = new ApiClient()
 const bHistory = useScroll(() => browserHistory)()
@@ -19,7 +20,7 @@ const dest = document.getElementById('content')
 const store = configureStore(bHistory, client, window.processedStore)
 const history = syncHistoryWithStore(bHistory, store)
 
-// global.socket = initSocket()
+global.socket = connectNes(store, 'ws://localhost:3000/ws')
 
 const RootComponent = () => (
   <Provider store={store} key="provider">

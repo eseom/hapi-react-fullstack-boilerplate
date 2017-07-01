@@ -2,9 +2,13 @@
 
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
+import { connect } from 'react-redux'
 import { CounterButton } from '../../components'
 import config from '../../config'
 
+@connect(store => ({
+  message: store.hapines.message,
+}), {})
 export default class Home extends Component {
   render() {
     const styles = {
@@ -30,7 +34,7 @@ export default class Home extends Component {
       'API Documentation Swagger',
       'Sequelize - covers traditional web apps.',
       'session based authentication',
-      'vue-nes',
+      'react-hapines',
       'sass loader, node sass',
     ]
     return (
@@ -45,6 +49,30 @@ export default class Home extends Component {
               (list, link, message, redux)
           </h3>
           </div>
+
+          <div className="col-lg-12" style={{ textAlign: 'center', marginTop: 20 }}>
+            <strong>last time from server through react-hapines</strong>
+            {
+              this.props.message.now ?
+                <div>
+                  <div>
+                    {new Date(this.props.message.now).toLocaleString()}
+                  </div>
+                  <div>
+                    <a
+                      href="https://github.com/eseom/hapi-react-fullstack-boilerplate/blob/master/src/server/core/task.js"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >{this.props.message.description}</a>
+                  </div>
+                </div>
+                :
+                <div>
+                  no message yet
+                </div>
+            }
+          </div>
+
           <div className="col-lg-12" style={{ textAlign: 'center', marginTop: 20, marginBottom: 30 }}>
             <p className="mb-0">
               {config.app.description}
@@ -60,6 +88,7 @@ export default class Home extends Component {
             </a>
             </p>
           </div>
+
           <div className="col-lg-12">
             <img src={require('./jumbo1.jpg')} style={{ width: '100%' }} alt="" />
             <a href="http://www.lanlinglaurel.com/london-city-images/4934473.html"><i>image from http://www.lanlinglaurel.com/london-city-images/4934473.html</i></a>

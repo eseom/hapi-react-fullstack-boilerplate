@@ -25,7 +25,7 @@ react full web stack with rendering server, hapi echosystem
 * API Documentation [Swagger](https://github.com/glennjones/hapi-swagger)
 * [Sequelize](https://github.com/sequelize/sequelize) - cover traditional web apps.
 * session based authentication
-* react-nes
+* react-hapines
 * sass loader, node sass
 
 ## Extra features

@@ -28,7 +28,9 @@ import styles from './App.scss'
   },
 }])
 @connect(
-  state => ({ user: state.auth.user && state.auth.user.username ? state.auth.user : null }),
+  state => ({
+    user: state.auth.user && state.auth.user.username ? state.auth.user : null,
+  }),
   { logout, pushState: push })
 export default class App extends Component {
   static propTypes = {
