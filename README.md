@@ -3,10 +3,6 @@ Hapi, Sequelize, React, Redux, Bootstrap, etc.
 
 react full web stack with rendering server, hapi echosystem
 
-**Forked from**
-
-* [react-redux-universal-hot-example](https://github.com/erikras/react-redux-universal-hot-example) by [erikras](https://github.com/erikras)
-
 ## DEMO
 
 [heroku deployed demo](https://hapi-react-fullstack-bp.herokuapp.com/)
@@ -15,7 +11,7 @@ react full web stack with rendering server, hapi echosystem
 * [HapiJS](https://github.com/hapijs/hapi)
 * [ReactJS](https://github.com/reactjs)
 * SSR
-* Webpack 2
+* Webpack 2 (new webpack config structure)
 * [React-Router](https://github.com/rackt/react-router)
 * [Redux](https://github.com/reactjs/redux)
 * Document Head [React-Helmet](https://github.com/nfl/react-helmet)
@@ -68,7 +64,12 @@ yarn test:node:watch
 
 ```bash
 yarn build
-[PORT=4000 ]DATABASE_URL=postgres://<username>@<hostname>:<port>/<dbname> yarn start
+
+# acording to settings.js
+[PORT=4000 ] \
+  DATABASE_URL=postgres://<username>@<hostname>:<port>/<dbname> \
+  REDIS_URL=redis://:<password>@<hostname>:<port>/<database_number> \
+  yarn start
 ```
 
 **API Interface**
@@ -78,7 +79,7 @@ yarn build
 ## Editor Configuration
 - **vscode**
 ```
-what can I do?
+code --install-extension dbaeumer.vscode-eslint
 ```
 - **Atom**
 ```bash
@@ -110,3 +111,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Reference
+
+** initially forked from**
+
+* [react-redux-universal-hot-example](https://github.com/erikras/react-redux-universal-hot-example) by [erikras](https://github.com/erikras)
