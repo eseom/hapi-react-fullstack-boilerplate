@@ -39,7 +39,7 @@ nestedRoute.post('/login', {
       reply(user)
     }, 1000)
   } else {
-    setTimeout(() => { // delay 1 second for testing
+    setTimeout(() => { // delay 2 second for testing
       reply(Boom.unauthorized('password mismatch'))
     }, 2000)
   }
