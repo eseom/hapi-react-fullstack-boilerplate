@@ -27,7 +27,9 @@ nestedRoute.post('/login', {
     },
   })
   if (!user) {
-    reply(Boom.unauthorized(`no such user: ${email}`))
+    setTimeout(() => { // delay 2 second for testing
+      reply(Boom.unauthorized(`no such user: ${email}`))
+    }, 2000)
     return
   }
   const authenticated = user.authenticate(request.payload.password)

@@ -85,7 +85,7 @@ export default class extends Component {
   render() {
     const styles = require('./Login.scss')
     const {
-      user, logout,
+      user, logout, loggingIn,
     } = this.props
     const { loginError } = this.state
     return (
@@ -104,6 +104,7 @@ export default class extends Component {
           <LoginForm
             submitValidate={this.onSubmit}
             loginError={loginError}
+            loggingIn={loggingIn}
             responseFacebook={responseFacebook}
           />
         }

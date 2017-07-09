@@ -42,7 +42,7 @@ export default class extends Component {
   }
 
   render() {
-    const { submitValidate, handleSubmit, submitting } = this.props
+    const { submitValidate, handleSubmit, loggingIn } = this.props
     return (
       <div>
         <h2 className="title">Login <span>sign in with you ID</span></h2>
@@ -99,14 +99,9 @@ export default class extends Component {
             </small>
             <button
               type="submit"
-              className={`btn btn-primary ${styles.submitButton}`} disabled={submitting}
-            >Login</button>
-            {/*
-            <button
-              className="btn btn-default btn-sm" type="button"
-              disabled={pristine || submitting} onClick={reset}
-            > Clear Values </button>
-            */}
+              className={`btn btn-primary ${styles.submitButton}`}
+              disabled={loggingIn}
+            >{loggingIn ? 'Wait...' : 'Login'}</button>
 
             <div style={{ marginTop: 20 }}>
               <small> Not a member yet? <Link to="/join">Get an ID</Link></small>
