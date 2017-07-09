@@ -1,45 +1,36 @@
+const redisDSN = 'redis://:dev@localhost:16379/10'
+
 module.exports = {
   development: {
-    version: '0.1',
+    version: '0.0.1',
+    connection: {
+      port: 3000,
+    },
     modules: [
       'core',
       'user',
       'todo',
       'items',
     ],
-    broker: {
-      url: 'redis://:dev@localhost:6379/10',
+    viewEngine: {
+      type: 'nunjucks',
     },
-    redis: {
-      url: 'redis://:dev@localhost:6379/10',
+    scheduler: {
+      enable: true,
+      broker: {
+        redis: redisDSN,
+      },
+      schedules: [
+        ['*/10 * * * * *', 'user.test'],
+      ],
     },
-    schedules: [
-      // ['1 1 * * * *', 'kuejs.test'],
-    ],
+    redis: redisDSN,
+    useSequelize: true,
     database: {
       storage: 'test.database',
       dialect: 'sqlite',
     },
-  },
-  production: {
-    version: '0.1',
-    port: process.env.PORT,
-    modules: [
-      'core',
-      'user',
-      'todo',
-      'items',
-    ],
-    broker: {
-      url: process.env.REDIS_URL,
-    },
-    redis: {
-      url: process.env.REDIS_URL,
-    },
-    schedules: [
-      // ['1 1 * * * *', 'kuejs.test'],
-    ],
-    database: {
+    database_pgsql: {
       url: process.env.DATABASE_URL,
       options: {
         logging: false,
@@ -51,6 +42,10 @@ module.exports = {
       },
       use_env_variable: 'DATABASE_URL',
       migrationStorageTableName: 'sequelize_meta',
+    },
+    database_test: {
+      storage: ':memory:',
+      dialect: 'sqlite',
     },
   },
 }
