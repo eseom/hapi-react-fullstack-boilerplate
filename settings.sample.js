@@ -47,5 +47,11 @@ module.exports = {
       storage: ':memory:',
       dialect: 'sqlite',
     },
+    exportToClient: { // export to browser
+      gacode: 'UA-000000000-1',
+      mockObject: {
+        test: 1,
+      },
+    },
   },
 }

@@ -39,6 +39,7 @@
     "SERVER": true,
     "DISABLE_SSR": true,
     "webpackIsomorphicTools": true,
-    "socket": true
+    "socket": true,
+    "settings": true
   }
 }

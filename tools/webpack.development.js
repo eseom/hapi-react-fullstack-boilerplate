@@ -14,6 +14,7 @@ const port = process.env.PORT || 3001
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin')
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./isomorphic-tools'))
 
+// babel
 let babelrcObject = {}
 
 try {
@@ -26,6 +27,19 @@ try {
 let babelConfig = {}
 if (babelrcObject.env) {
   babelConfig = babelrcObject.env.development
+}
+
+// settings
+let settingsObject = {}
+let exportToClient = {}
+try {
+  settingsObject = require('../settings.js').development
+  if (settingsObject.exportToClient) {
+    exportToClient = JSON.stringify(settingsObject.exportToClient)
+  }
+} catch (err) {
+  logger.error('==>     ERROR: Error parsing your settings.js.')
+  logger.error(err)
 }
 
 module.exports = {
@@ -126,6 +140,7 @@ module.exports = {
       CLIENT: true,
       SERVER: false,
       DEVELOPMENT: true,
+      settings: exportToClient,
     }),
     webpackIsomorphicToolsPlugin.development(),
   ],

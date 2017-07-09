@@ -3,6 +3,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
 import { Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
@@ -20,12 +21,21 @@ const dest = document.getElementById('content')
 const store = configureStore(bHistory, client, window.processedStore)
 const history = syncHistoryWithStore(bHistory, store)
 
+// hapi-nes websocket
 const wsUrl = `ws${window.location.protocol === 'https:' ? 's' : ''}://${window.location.host}`
 global.socket = connectNes(store, wsUrl)
+
+// google analytics
+ReactGA.initialize(settings.gacode)
+const logPageView = () => {
+  ReactGA.set({ page: window.location.pathname + window.location.search })
+  ReactGA.pageview(window.location.pathname + window.location.search)
+}
 
 const RootComponent = () => (
   <Provider store={store} key="provider">
     <Router
+      onUpdate={logPageView}
       render={props =>
         <ReduxAsyncConnect {...props} helpers={{ client }} filter={item => !item.deferred} />
       }

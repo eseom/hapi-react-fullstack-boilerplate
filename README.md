@@ -23,6 +23,7 @@ react full web stack with rendering server, hapi echosystem
 * session based authentication
 * react-hapines
 * sass loader, node sass
+* react-ga
 
 ## Extra features
 * [hails](https://github.com/eseom/hails) - Django style Hapi module structure

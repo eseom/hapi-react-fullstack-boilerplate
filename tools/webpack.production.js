@@ -9,6 +9,9 @@ const webpack = require('webpack')
 const CleanPlugin = require('clean-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const strip = require('strip-loader')
+const { server } = require('hails')
+
+const { logger } = server
 
 const projectRootPath = path.resolve(__dirname, '../')
 const assetsPath = path.resolve(projectRootPath, './static/dist')
@@ -18,6 +21,19 @@ const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin')
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./isomorphic-tools'))
 
 const extractText = new ExtractTextPlugin({ filename: '[name]-[chunkhash].css', disable: false, allChunks: true })
+
+// settings
+let settingsObject = {}
+let exportToClient = {}
+try {
+  settingsObject = require('../settings.js').production
+  if (settingsObject.exportToClient) {
+    exportToClient = JSON.stringify(settingsObject.exportToClient)
+  }
+} catch (err) {
+  logger.error('==>     ERROR: Error parsing your settings.js.')
+  logger.error(err)
+}
 
 module.exports = {
   devtool: 'source-map',
@@ -95,6 +111,7 @@ module.exports = {
       CLIENT: true,
       SERVER: false,
       DEVELOPMENT: false,
+      settings: exportToClient,
     }),
 
     // ignore dev config
