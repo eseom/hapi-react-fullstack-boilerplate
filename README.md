@@ -1,7 +1,7 @@
 # hapi-react-fullstack-boilerplate
-Hapi, Sequelize, React, Redux, Bootstrap, etc.
+Hapi, Sequelize, React, Redux, Bootstrap, Kuejs, etc.
 
-react full web stack with rendering server, hapi echosystem
+react full web stack with rendering server, hapi echosystem for REAL Production.
 
 ## DEMO
 
@@ -21,6 +21,7 @@ react full web stack with rendering server, hapi echosystem
 * API Documentation [Swagger](https://github.com/glennjones/hapi-swagger)
 * [Sequelize](https://github.com/sequelize/sequelize) - cover traditional web apps.
 * session based authentication
+* scheduling job queue (for async jobs)
 * react-hapines
 * sass loader, node sass
 * react-ga
