@@ -9,9 +9,8 @@ const webpack = require('webpack')
 const CleanPlugin = require('clean-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const strip = require('strip-loader')
-const { server } = require('hails')
 
-const { logger } = server
+const logger = console
 
 const projectRootPath = path.resolve(__dirname, '../')
 const assetsPath = path.resolve(projectRootPath, './static/dist')

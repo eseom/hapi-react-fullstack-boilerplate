@@ -51,11 +51,7 @@
     "dev:packager": "better-npm-run dev:packager",
     "test": "karma start",
     "test:node": "better-npm-run test:node",
-    "test:node:watch": "better-npm-run test:node:watch",
-    "db:upgrade": "sequelize db:migrate",
-    "db:downgrade": "sequelize db:migrate:undo",
-    "db:create": "sequelize migration:create",
-    "db:status": "sequelize db:migrate:status"
+    "test:node:watch": "better-npm-run test:node:watch"
   },
   "betterScripts": {
     "server": {
@@ -121,7 +117,7 @@
     "bootstrap": "4.0.0-alpha.6",
     "cheerio": "^0.22.0",
     "google-map-react": "^0.22.3",
-    "hails": "^0.1.17",
+    "hails": "^0.2.11",
     "hapi-nested-route": "^0.1.1",
     "karma-cli": "^1.0.1",
     "karma-mocha": "^1.3.0",
