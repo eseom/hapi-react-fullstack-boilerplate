@@ -174,8 +174,8 @@
     "webpack-isomorphic-tools": "^3.0.1"
   },
   "engines": {
-    "node": "8.0.0",
-    "npm": "5.0.0",
-    "yarn": "0.24.5"
+    "node": ">8.0.0",
+    "npm": ">5.0.0",
+    "yarn": ">0.24.5"
   }
 }
